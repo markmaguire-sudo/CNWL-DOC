@@ -117,56 +117,38 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
           {/* Dedicated Phone Line Display */}
           <div className="bg-slate-50 rounded-lg p-2.5 border border-slate-200/80 flex items-center justify-between font-mono text-xs">
             <span className="text-slate-500 text-[11px]">Direct Line:</span>
-            {isAuthenticated ? (
-              <span className="font-bold text-emerald-600 text-sm tracking-wide">
-                {role.phone}
-              </span>
-            ) : (
-              <span className="text-slate-400 tracking-widest font-bold">
-                {role.phone.slice(0, 4)} ••• •••
-              </span>
-            )}
+            <span className="font-bold text-emerald-600 text-sm tracking-wide">
+              {role.phone}
+            </span>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="pt-4 mt-3 border-t border-slate-100 flex items-center gap-2">
-          {isAuthenticated ? (
-            <>
-              <a
-                href={`tel:${role.phone.replace(/\s+/g, '')}`}
-                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs min-h-[44px]"
-                title={`Call ${officerName}`}
-              >
-                <Phone className="w-4 h-4" />
-                <span>Call Now</span>
-              </a>
+          <a
+            href={`tel:${role.phone.replace(/\s+/g, '')}`}
+            className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs min-h-[44px]"
+            title={`Call ${officerName}`}
+          >
+            <Phone className="w-4 h-4" />
+            <span>Call Now</span>
+          </a>
 
-              <a
-                href={`sms:${role.phone.replace(/\s+/g, '')}`}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
-                title={`SMS ${officerName}`}
-              >
-                <MessageSquare className="w-4 h-4" />
-              </a>
+          <a
+            href={`sms:${role.phone.replace(/\s+/g, '')}`}
+            className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
+            title={`SMS ${officerName}`}
+          >
+            <MessageSquare className="w-4 h-4" />
+          </a>
 
-              <button
-                onClick={() => handleCopy(`${officerName} (${role.title}): ${role.phone}`, role.id)}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
-                title="Copy contact info"
-              >
-                {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-600" />}
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={onRequestAuthenticate}
-              className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-slate-200 transition-colors min-h-[44px]"
-            >
-              <ShieldAlert className="w-4 h-4 text-amber-600" />
-              <span>Unlock Call Actions</span>
-            </button>
-          )}
+          <button
+            onClick={() => handleCopy(`${officerName} (${role.title}): ${role.phone}`, role.id)}
+            className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
+            title="Copy contact info"
+          >
+            {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-600" />}
+          </button>
         </div>
       </div>
     );
@@ -205,66 +187,65 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
       </div>
 
       {/* Quick Directories Shortcut Cards on Homescreen */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
         <button
           onClick={() => onNavigateToDirectory?.('INPATIENT')}
-          className="bg-emerald-50 hover:bg-emerald-100/90 text-emerald-950 p-3.5 rounded-2xl border border-emerald-200 hover:border-emerald-300 shadow-xs flex items-center justify-between text-left group transition-all cursor-pointer"
+          className="bg-emerald-50 hover:bg-emerald-100/90 text-emerald-950 p-2 sm:p-3.5 rounded-xl sm:rounded-2xl border border-emerald-200 hover:border-emerald-300 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between text-left group transition-all cursor-pointer min-w-0"
         >
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-emerald-200/80 rounded-xl text-emerald-900 border border-emerald-300 shrink-0">
-              <Hospital className="w-5 h-5 text-emerald-800" />
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 w-full">
+            <div className="p-1.5 sm:p-2.5 bg-emerald-200/80 rounded-lg sm:rounded-xl text-emerald-900 border border-emerald-300 shrink-0">
+              <Hospital className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-emerald-800" />
             </div>
-            <div className="min-w-0">
-              <h4 className="font-extrabold text-xs text-emerald-950 group-hover:text-emerald-900 transition-colors flex items-center gap-1.5">
-                <span className="truncate">Inpatient Sites</span>
-                <span className="text-[9px] bg-emerald-200/80 text-emerald-900 border border-emerald-300 font-mono px-1.5 py-0.2 rounded font-semibold uppercase">50+ Contacts</span>
+            <div className="min-w-0 flex-1">
+              <h4 className="font-extrabold text-[10px] xs:text-[11px] sm:text-xs text-emerald-950 group-hover:text-emerald-900 transition-colors truncate">
+                Inpatient Sites
               </h4>
-              <p className="text-[11px] text-emerald-800/80 mt-0.5 truncate">
+              <p className="hidden sm:block text-[11px] text-emerald-800/80 mt-0.5 truncate">
                 KCW, Brent, Harrow, Camden, Hillingdon, MK, CAMHS, Rehab & Prisons
               </p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
+          <ChevronRight className="hidden md:block w-4 h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
         </button>
 
         <button
           onClick={() => onNavigateToDirectory?.('GOLD')}
-          className="bg-green-50 hover:bg-green-100/90 text-green-950 p-3.5 rounded-2xl border border-green-200 hover:border-green-300 shadow-xs flex items-center justify-between text-left group transition-all cursor-pointer"
+          className="bg-green-50 hover:bg-green-100/90 text-green-950 p-2 sm:p-3.5 rounded-xl sm:rounded-2xl border border-green-200 hover:border-green-300 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between text-left group transition-all cursor-pointer min-w-0"
         >
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-green-200/80 text-green-900 rounded-xl border border-green-300 shrink-0">
-              <ShieldAlert className="w-5 h-5 text-green-800" />
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 w-full">
+            <div className="p-1.5 sm:p-2.5 bg-green-200/80 text-green-900 rounded-lg sm:rounded-xl border border-green-300 shrink-0">
+              <ShieldAlert className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-green-800" />
             </div>
-            <div className="min-w-0">
-              <h4 className="font-extrabold text-xs text-green-950 group-hover:text-green-900 transition-colors">
+            <div className="min-w-0 flex-1">
+              <h4 className="font-extrabold text-[10px] xs:text-[11px] sm:text-xs text-green-950 group-hover:text-green-900 transition-colors truncate">
                 Director on-call list
               </h4>
-              <p className="text-[11px] text-green-800/80 mt-0.5 truncate">
-                Executive Directors & Escalation Contacts
+              <p className="hidden sm:block text-[11px] text-green-800/80 mt-0.5 truncate">
+                Executive Directors & Escalations
               </p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-green-700 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
+          <ChevronRight className="hidden md:block w-4 h-4 text-green-700 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
         </button>
 
         <button
           onClick={() => onNavigateToDirectory?.('SILVER')}
-          className="bg-teal-50 hover:bg-teal-100/90 text-teal-950 p-3.5 rounded-2xl border border-teal-200 hover:border-teal-300 shadow-xs flex items-center justify-between text-left group transition-all cursor-pointer"
+          className="bg-teal-50 hover:bg-teal-100/90 text-teal-950 p-2 sm:p-3.5 rounded-xl sm:rounded-2xl border border-teal-200 hover:border-teal-300 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between text-left group transition-all cursor-pointer min-w-0"
         >
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-teal-200/80 text-teal-900 rounded-xl border border-teal-300 shrink-0">
-              <Users className="w-5 h-5 text-teal-800" />
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 w-full">
+            <div className="p-1.5 sm:p-2.5 bg-teal-200/80 text-teal-900 rounded-lg sm:rounded-xl border border-teal-300 shrink-0">
+              <Users className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-teal-800" />
             </div>
-            <div className="min-w-0">
-              <h4 className="font-extrabold text-xs text-teal-950 group-hover:text-teal-900 transition-colors">
+            <div className="min-w-0 flex-1">
+              <h4 className="font-extrabold text-[10px] xs:text-[11px] sm:text-xs text-teal-950 group-hover:text-teal-900 transition-colors truncate">
                 Silver Command
               </h4>
-              <p className="text-[11px] text-teal-800/80 mt-0.5 truncate">
+              <p className="hidden sm:block text-[11px] text-teal-800/80 mt-0.5 truncate">
                 Tactical Officers & Operational Leads
               </p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-teal-700 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
+          <ChevronRight className="hidden md:block w-4 h-4 text-teal-700 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
         </button>
       </div>
 

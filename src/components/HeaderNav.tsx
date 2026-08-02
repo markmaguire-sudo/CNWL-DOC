@@ -2,17 +2,14 @@ import React from 'react';
 import { 
   PhoneCall, 
   Calendar, 
-  AlertOctagon, 
-  BookOpen, 
   Bot, 
-  Lock, 
   ShieldCheck,
   Clock,
   Users,
   ExternalLink
 } from 'lucide-react';
 
-export type TabType = 'active' | 'directories' | 'full' | 'incidents' | 'protocols' | 'ai';
+export type TabType = 'active' | 'directories' | 'full' | 'ai';
 
 interface HeaderNavProps {
   activeTab: TabType;
@@ -70,22 +67,10 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
               EPRR Directory
             </span>
 
-            {isAuthenticated ? (
-              <button
-                onClick={onLockSession}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1.5 transition-colors text-xs font-medium"
-                title="Lock Director Session"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="hidden xs:inline">Authenticated</span>
-                <Lock className="w-3 h-3 text-slate-400" />
-              </button>
-            ) : (
-              <span className="bg-red-950/60 text-red-400 border border-red-800/60 px-2.5 py-1 rounded-lg flex items-center gap-1 text-xs font-semibold">
-                <Lock className="w-3.5 h-3.5" />
-                Locked
-              </span>
-            )}
+            <span className="bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 px-2.5 py-1 rounded-lg flex items-center gap-1.5 text-xs font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Direct Access Unlocked</span>
+            </span>
           </div>
         </div>
 
@@ -161,30 +146,6 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           </button>
 
           <button
-            onClick={() => onSelectTab('incidents')}
-            className={`px-3.5 py-2.5 rounded-t-lg text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-colors border-b-2 min-h-[40px] ${
-              activeTab === 'incidents'
-                ? 'bg-amber-50 text-amber-800 border-amber-600 font-bold'
-                : 'text-slate-600 hover:text-slate-900 border-transparent hover:bg-slate-50'
-            }`}
-          >
-            <AlertOctagon className="w-3.5 h-3.5" />
-            <span>Incident Log & METHANE</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('protocols')}
-            className={`px-3.5 py-2.5 rounded-t-lg text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-colors border-b-2 min-h-[40px] ${
-              activeTab === 'protocols'
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-600 font-bold'
-                : 'text-slate-600 hover:text-slate-900 border-transparent hover:bg-slate-50'
-            }`}
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Escalation Protocols</span>
-          </button>
-
-          <button
             onClick={() => onSelectTab('ai')}
             className={`px-3.5 py-2.5 rounded-t-lg text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-colors border-b-2 min-h-[40px] ${
               activeTab === 'ai'
@@ -217,7 +178,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           }`}
         >
           <Users className="w-4 h-4" />
-          <span>Gold/Silver</span>
+          <span>Directories</span>
         </button>
 
         <button
@@ -228,26 +189,6 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
         >
           <Calendar className="w-4 h-4" />
           <span>Rota</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('incidents')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-semibold transition-colors min-h-[44px] min-w-[56px] justify-center ${
-            activeTab === 'incidents' ? 'text-amber-600 bg-amber-50 font-bold' : 'text-slate-600'
-          }`}
-        >
-          <AlertOctagon className="w-4 h-4" />
-          <span>Incidents</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('protocols')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-semibold transition-colors min-h-[44px] min-w-[56px] justify-center ${
-            activeTab === 'protocols' ? 'text-emerald-600 bg-emerald-50 font-bold' : 'text-slate-600'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Protocols</span>
         </button>
 
         <button

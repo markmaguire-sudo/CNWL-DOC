@@ -4,16 +4,12 @@ import { SecurityLock } from './components/SecurityLock';
 import { CurrentOnCallTab } from './components/CurrentOnCallTab';
 import { FullRotaTab } from './components/FullRotaTab';
 import { DirectoriesTab } from './components/DirectoriesTab';
-import { IncidentHubTab } from './components/IncidentHubTab';
-import { ProtocolsTab } from './components/ProtocolsTab';
 import { AiAssistantTab } from './components/AiAssistantTab';
 import { OnCallRoleInfo, RotaPeriod, CriticalIncident, EscalationPlaybook } from './types';
 import { DEDICATED_ROLES, INITIAL_ROTA_PERIODS, PLAYBOOKS, INITIAL_INCIDENTS } from './data/rotaData';
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return !!localStorage.getItem('doc_session_token');
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
   const [showSecurityLock, setShowSecurityLock] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<TabType>('active');
@@ -183,14 +179,6 @@ export default function App() {
             onUpdatePeriods={handleUpdateRotaPeriods}
             onRequestAuthenticate={() => setShowSecurityLock(true)}
           />
-        )}
-
-        {activeTab === 'incidents' && (
-          <IncidentHubTab incidents={incidents} />
-        )}
-
-        {activeTab === 'protocols' && (
-          <ProtocolsTab playbooks={playbooks} />
         )}
 
         {activeTab === 'ai' && (
