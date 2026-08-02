@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to gold_contacts collection
+    match /gold_contacts/{contactId} {
+      allow read, write: if true;
+    }
+
+    // Allow read/write access to silver_contacts collection
+    match /silver_contacts/{contactId} {
+      allow read, write: if true;
+    }
+
+    // Default catch-all
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

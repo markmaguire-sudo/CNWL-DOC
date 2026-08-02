@@ -1,0 +1,6 @@
+{
+  "name": "Director on Call",
+  "description": "On-call rota directory, METHANE reporting guidelines, escalation playbooks, and EPRR AI advisor for CNWL Directors on Call.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

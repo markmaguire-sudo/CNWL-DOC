@@ -1,0 +1,285 @@
+import { OnCallRoleInfo, RotaPeriod, EscalationPlaybook, CriticalIncident } from '../types';
+
+export const DEDICATED_ROLES: OnCallRoleInfo[] = [
+  {
+    id: 'DoC_MentalHealth',
+    title: 'Director on Call - Mental Health',
+    shortCode: 'MH-DoC',
+    phone: '0800 090 2464',
+    description: 'Executive Lead for Mental Health Services, Inpatient Wards & Acute Crisis Escalations',
+    color: 'bg-indigo-600 text-white'
+  },
+  {
+    id: 'DoC_Community',
+    title: 'Director on Call - Community',
+    shortCode: 'Com-DoC',
+    phone: '0800 090 2465',
+    description: 'Executive Lead for Community Health Services, Physical Health & Off-site Facilities',
+    color: 'bg-emerald-600 text-white'
+  },
+  {
+    id: 'Ldn_SNoC',
+    title: 'Senior Nurse on Call - London',
+    shortCode: 'Ldn-SNoC',
+    phone: '0800 090 2467',
+    description: 'Senior Clinical Nursing Lead for CNWL London Units & Inpatient Bed Management',
+    color: 'bg-amber-600 text-white'
+  },
+  {
+    id: 'MK_MoC',
+    title: 'Manager on Call - Milton Keynes',
+    shortCode: 'MK-MoC',
+    phone: '0800 090 2466',
+    description: 'Operational Operational Manager Lead for Milton Keynes Community & Mental Health Services',
+    color: 'bg-blue-600 text-white'
+  },
+  {
+    id: 'MH_SMoC',
+    title: 'Senior Manager - Mental Health',
+    shortCode: 'MH-SMoC',
+    phone: '07740 514 459',
+    description: 'Senior Operational Manager for Mental Health Acute & Crisis Teams',
+    color: 'bg-purple-600 text-white'
+  },
+  {
+    id: 'Com_SMoC',
+    title: 'Senior Manager - Community',
+    shortCode: 'Com-SMoC',
+    phone: '0800 090 2466',
+    description: 'Senior Operational Manager for Community Services & Urgent Care Pathways',
+    color: 'bg-teal-600 text-white'
+  }
+];
+
+export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
+  {
+    id: 'period-1',
+    startDate: '2026-07-21',
+    endDate: '2026-07-24',
+    displayStart: 'Tue 21/07/2026',
+    displayEnd: 'Fri 24/07/2026',
+    assignments: [
+      { roleCategory: 'DoC_MentalHealth', personName: 'Luis Gracia' },
+      { roleCategory: 'DoC_Community', personName: 'James Clay' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Mark Maguire' },
+      { roleCategory: 'Com_SMoC', personName: 'Mark Maguire' }
+    ]
+  },
+  {
+    id: 'period-2a',
+    startDate: '2026-07-24',
+    endDate: '2026-07-27',
+    displayStart: 'Fri 24/07/2026',
+    displayEnd: 'Mon 27/07/2026',
+    assignments: [
+      { roleCategory: 'DoC_MentalHealth', personName: 'Stephen Burke', startDate: '24/07/2026', endDate: '27/07/2026' },
+      { roleCategory: 'DoC_Community', personName: 'Jemma Cain', startDate: '24/07/2026', endDate: '27/07/2026' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq', startDate: '24/07/2026', endDate: '27/07/2026' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Mark Maguire' },
+      { roleCategory: 'Com_SMoC', personName: 'Mark Maguire' }
+    ]
+  },
+  {
+    id: 'period-2b',
+    startDate: '2026-07-27',
+    endDate: '2026-07-31',
+    displayStart: 'Mon 27/07/2026',
+    displayEnd: 'Fri 31/07/2026',
+    assignments: [
+      { roleCategory: 'DoC_MentalHealth', personName: 'Lucy Cooper', startDate: '27/07/2026', endDate: '31/07/2026' },
+      { roleCategory: 'DoC_Community', personName: 'Lorraine Shelby', startDate: '27/07/2026', endDate: '31/07/2026' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock', startDate: '27/07/2026', endDate: '31/07/2026' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
+      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+    ]
+  },
+  {
+    id: 'period-3',
+    startDate: '2026-07-28',
+    endDate: '2026-07-31',
+    displayStart: 'Tue 28/07/2026',
+    displayEnd: 'Fri 31/07/2026',
+    assignments: [
+      { roleCategory: 'DoC_MentalHealth', personName: 'Lucy Cooper' },
+      { roleCategory: 'DoC_Community', personName: 'Lorraine Shelby' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
+      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+    ]
+  },
+  {
+    id: 'period-4a',
+    startDate: '2026-07-31',
+    endDate: '2026-08-03',
+    displayStart: 'Fri 31/07/2026',
+    displayEnd: 'Mon 03/08/2026',
+    assignments: [
+      { roleCategory: 'DoC_MentalHealth', personName: 'Gemma Brown', startDate: '31/07/2026', endDate: '03/08/2026' },
+      { roleCategory: 'DoC_Community', personName: 'Caroline Davies', startDate: '31/07/2026', endDate: '03/08/2026' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves', startDate: '31/07/2026', endDate: '03/08/2026' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
+      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+    ]
+  },
+  {
+    id: 'period-4b',
+    startDate: '2026-08-03',
+    endDate: '2026-08-07',
+    displayStart: 'Mon 03/08/2026',
+    displayEnd: 'Fri 07/08/2026',
+    assignments: [
+      { roleCategory: 'DoC_MentalHealth', personName: 'Kwame Boaitey', startDate: '03/08/2026', endDate: '07/08/2026' },
+      { roleCategory: 'DoC_Community', personName: 'Tsitsi Mlilo', startDate: '03/08/2026', endDate: '07/08/2026' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme', startDate: '03/08/2026', endDate: '07/08/2026' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
+      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+    ]
+  }
+];
+
+export const PLAYBOOKS: EscalationPlaybook[] = [
+  {
+    id: 'pb-silver-gold',
+    title: 'Gold & Silver Command Escalation Framework',
+    category: 'Governance & Command',
+    severityThreshold: 'Level 2 & Level 3',
+    immediateActions: [
+      'Assess threat to life, patient safety, or severe disruption to core NHS services.',
+      'Declare Silver Command (Operational Level) or Gold Command (Strategic Level) if multi-site or multi-agency.',
+      'Appoint Log Keeper immediately to record all decisions, timings, and rationale.',
+      'Establish regular 30-minute Gold Command briefing cadence via dedicated emergency teleconference line.'
+    ],
+    mandatoryNotifications: [
+      'NHS England Regional EPRR On-Call',
+      'Chief Executive Officer (CNWL)',
+      'Communications & Media Press Team On-Call',
+      'Integrated Care Board (ICB) Gold Lead'
+    ],
+    keyContacts: ['DoC_MentalHealth', 'DoC_Community', 'MH_SMoC'],
+    cqcRequirement: 'Notifiable event if severe disruption or emergency evacuation occurs.'
+  },
+  {
+    id: 'pb-cyber-it',
+    title: 'Critical IT Outage & Cyber Security Attack (RiO / SystmOne)',
+    category: 'IT & EPR Failure',
+    severityThreshold: 'Level 2 (Silver) / Level 3 (Gold)',
+    immediateActions: [
+      'Isolate compromised network segments if ransomware suspected; preserve log files.',
+      'Invoke Business Continuity Plan (BCP) & paper-based patient recording protocols across affected sites.',
+      'Establish physical dispatch or phone check-ins for high-risk community patients (CPA red list).',
+      'Verify backup generator/UPS power for core server nodes if hardware issue.'
+    ],
+    mandatoryNotifications: [
+      'CNWL Chief Information Officer (CIO) On-Call',
+      'NHS England Cyber Operations (CSOC / 0300 303 5222)',
+      'Information Commissioner Office (ICO) within 72 hours if data breach'
+    ],
+    keyContacts: ['DoC_MentalHealth', 'DoC_Community', 'Com_SMoC'],
+    cqcRequirement: 'Report under CQC Regulation 18 if electronic patient record outage risks harm.'
+  },
+  {
+    id: 'pb-patient-harm',
+    title: 'Severe Patient Harm / Inpatient Death in Care',
+    category: 'Clinical Governance',
+    severityThreshold: 'Level 2 (Silver Escalation)',
+    immediateActions: [
+      'Ensure immediate medical attention and stabilize remaining patients/staff on ward.',
+      'Preserve scene if unexpected death or suspected foul play; contact Metropolitan Police / Thames Valley Police.',
+      'Enact Duty of Candour protocol to inform family/next of kin within 24 hours in writing.',
+      'Debrief attending nursing team and arrange psychological staff support.'
+    ],
+    mandatoryNotifications: [
+      'Chief Medical Officer & Chief Nurse',
+      'CQC Notification via Portal within 24 hours',
+      'Coroner Office & NHS Resolution'
+    ],
+    keyContacts: ['Ldn_SNoC', 'DoC_MentalHealth', 'MH_SMoC'],
+    cqcRequirement: 'Statutory Regulation 16/18 notification mandatory.'
+  },
+  {
+    id: 'pb-facility-fire',
+    title: 'Facility Emergency, Fire or Severe Infrastructure Damage',
+    category: 'Estates & Facilities',
+    severityThreshold: 'Level 3 (Major Incident)',
+    immediateActions: [
+      'Evacuate affected ward/building to designated assembly point per Fire Evacuation Plan.',
+      'Call Emergency Services (999 Fire Brigade) and confirm casualties/hazards.',
+      'Construct METHANE report and broadcast to Silver/Gold Command team.',
+      'Coordinate emergency bed placement for evacuated mental health/community inpatients across CNWL network.'
+    ],
+    mandatoryNotifications: [
+      'Estates & Facilities Director On-Call',
+      'London Ambulance Service / South Central Ambulance Service',
+      'NHSE EPRR Regional Command'
+    ],
+    keyContacts: ['DoC_MentalHealth', 'DoC_Community', 'Ldn_SNoC', 'MK_MoC'],
+    cqcRequirement: 'CQC Notification regarding change in service capacity or location.'
+  },
+  {
+    id: 'pb-media-crisis',
+    title: 'Media Emergency, Crisis Communications & Social Media',
+    category: 'Reputation & Comms',
+    severityThreshold: 'Level 1 / Level 2',
+    immediateActions: [
+      'Enforce "No Comment / Redirect to Press Office" rule for all front-line staff.',
+      'Do NOT confirm patient names or clinical details under any circumstances.',
+      'Draft holding statement with CNWL Communications Lead based on verified facts.',
+      'Monitor social media sentiment and alert Gold Lead if viral false reports emerge.'
+    ],
+    mandatoryNotifications: [
+      'CNWL Head of Communications & Media Lead',
+      'NHSE Communications On-Call'
+    ],
+    keyContacts: ['DoC_MentalHealth', 'DoC_Community'],
+    cqcRequirement: 'Inform Board Lead for Communications.'
+  }
+];
+
+export const INITIAL_INCIDENTS: CriticalIncident[] = [
+  {
+    id: 'INC-2026-0802-01',
+    title: 'St Charles Mental Health Unit - Mains Power Disturbance & Generator Test',
+    severityLevel: 2,
+    status: 'ACTIVE',
+    createdTime: '2026-08-02 01:15',
+    location: 'St Charles Hospital, Kensington & Chelsea, London',
+    directorInCharge: 'Gemma Brown (Mental Health DoC)',
+    summary: 'Partial power dip affecting Riverside Ward. Backup UPS activated. Estates team en route to assess main substation transformer.',
+    methane: {
+      majorIncidentDeclared: false,
+      exactLocation: 'St Charles Hospital, Exmoor Street, London W10 6DZ',
+      typeOfIncident: 'Electrical Infrastructure Failure / Power Dip',
+      hazardsPresent: 'Emergency lighting active. Medical equipment on battery backup.',
+      accessRoute: 'Exmoor Street Main Gate clear for emergency engineers',
+      numberCasualties: '0 casualties. All 18 patients safe and accounted for.',
+      emergencyServicesRequired: 'Estates Emergency Contractor & UK Power Networks notified.'
+    },
+    decisionLogs: [
+      {
+        id: 'log-1',
+        timestamp: '2026-08-02 01:20',
+        author: 'Gemma Brown',
+        role: 'Director on Call - Mental Health',
+        decision: 'Convened Silver Command teleconference with London Senior Nurse on Call (Nick Bygraves) and Estates Duty Lead.',
+        category: 'Strategic',
+        actionAssignedTo: 'Nick Bygraves (Ldn-SNoC)'
+      },
+      {
+        id: 'log-2',
+        timestamp: '2026-08-02 01:35',
+        author: 'Nick Bygraves',
+        role: 'Senior Nurse on Call - London',
+        decision: 'Verified battery reserves on all vital monitors in Riverside Ward. Staffing ratio checked; night shift doubled up for patient re-assurance.',
+        category: 'Clinical',
+        actionAssignedTo: 'Ward Sister - Riverside'
+      }
+    ]
+  }
+];

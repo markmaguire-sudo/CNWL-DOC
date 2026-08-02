@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "gold_contacts": {
+      "title": "Gold Command Directory Contacts",
+      "description": "Executive and regional strategic contacts for Gold Command escalation",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "commandLevel": { "type": "string", "enum": ["GOLD"] },
+        "phone": { "type": "string" },
+        "alternativePhone": { "type": "string" },
+        "email": { "type": "string" },
+        "organization": { "type": "string" },
+        "notes": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "title", "phone", "commandLevel"]
+    },
+    "silver_contacts": {
+      "title": "Silver Command Directory Contacts",
+      "description": "Tactical and operational site leads for Silver Command escalation",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "commandLevel": { "type": "string", "enum": ["SILVER"] },
+        "phone": { "type": "string" },
+        "alternativePhone": { "type": "string" },
+        "email": { "type": "string" },
+        "siteLocation": { "type": "string" },
+        "notes": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "title", "phone", "commandLevel"]
+    }
+  }
+}
