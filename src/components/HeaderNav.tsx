@@ -5,7 +5,6 @@ import {
   Bot, 
   ShieldCheck,
   Clock,
-  Users,
   ExternalLink
 } from 'lucide-react';
 
@@ -53,9 +52,21 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           <div className="flex items-center gap-2 sm:gap-3">
             <a
               href="https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr"
+              onClick={(e) => {
+                e.preventDefault();
+                const url = "https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr";
+                try {
+                  const win = window.open(url, '_blank', 'noopener,noreferrer');
+                  if (!win || win.closed || typeof win.closed === 'undefined') {
+                    window.location.href = url;
+                  }
+                } catch {
+                  window.location.href = url;
+                }
+              }}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-500 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition-colors shadow-xs"
+              className="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer min-h-[32px]"
               title="Launch NHS SharePoint Copilot Bot"
             >
               <Bot className="w-3 h-3" />
@@ -120,46 +131,10 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
             <PhoneCall className="w-3.5 h-3.5" />
             <span>On Call Today</span>
           </button>
-
-          <button
-            onClick={() => onSelectTab('directories')}
-            className={`px-3.5 py-2.5 rounded-t-lg text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-colors border-b-2 min-h-[40px] ${
-              activeTab === 'directories'
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-600 font-bold'
-                : 'text-slate-600 hover:text-slate-900 border-transparent hover:bg-slate-50'
-            }`}
-          >
-            <Users className="w-3.5 h-3.5" />
-            <span>Director on-call & Silver Directories</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('full')}
-            className={`px-3.5 py-2.5 rounded-t-lg text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-colors border-b-2 min-h-[40px] ${
-              activeTab === 'full'
-                ? 'bg-slate-100 text-blue-700 border-blue-600 font-bold'
-                : 'text-slate-600 hover:text-slate-900 border-transparent hover:bg-slate-50'
-            }`}
-          >
-            <Calendar className="w-3.5 h-3.5" />
-            <span>Full Rota Schedule</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('ai')}
-            className={`px-3.5 py-2.5 rounded-t-lg text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-colors border-b-2 min-h-[40px] ${
-              activeTab === 'ai'
-                ? 'bg-purple-50 text-purple-800 border-purple-600 font-bold'
-                : 'text-slate-600 hover:text-slate-900 border-transparent hover:bg-slate-50'
-            }`}
-          >
-            <Bot className="w-3.5 h-3.5" />
-            <span>AI Executive Advisor</span>
-          </button>
         </nav>
       </header>
 
-      {/* Mobile Sticky Bottom Tab Bar (Mobile-First Ergonomics) */}
+      {/* Mobile Sticky Bottom Tab Bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 py-1.5 px-2 flex justify-around items-center shadow-lg">
         <button
           onClick={() => onSelectTab('active')}
@@ -168,37 +143,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           }`}
         >
           <PhoneCall className="w-4 h-4" />
-          <span>On Call</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('directories')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-semibold transition-colors min-h-[44px] min-w-[56px] justify-center ${
-            activeTab === 'directories' ? 'text-emerald-600 bg-emerald-50 font-bold' : 'text-slate-600'
-          }`}
-        >
-          <Users className="w-4 h-4" />
-          <span>Directories</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('full')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-semibold transition-colors min-h-[44px] min-w-[56px] justify-center ${
-            activeTab === 'full' ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-600'
-          }`}
-        >
-          <Calendar className="w-4 h-4" />
-          <span>Rota</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('ai')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-semibold transition-colors min-h-[44px] min-w-[56px] justify-center ${
-            activeTab === 'ai' ? 'text-purple-600 bg-purple-50 font-bold' : 'text-slate-600'
-          }`}
-        >
-          <Bot className="w-4 h-4" />
-          <span>AI Advisor</span>
+          <span>On Call Today</span>
         </button>
       </div>
     </>

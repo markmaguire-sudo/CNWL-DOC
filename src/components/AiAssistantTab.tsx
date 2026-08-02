@@ -45,6 +45,27 @@ How can I advise your Director on Call response today?`,
   const [inputPrompt, setInputPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [copiedMsgId, setCopiedMsgId] = useState<string | null>(null);
+  const [copiedCopilotUrl, setCopiedCopilotUrl] = useState(false);
+
+  const COPILOT_AGENT_URL = "https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr";
+
+  const handleLaunchCopilot = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    try {
+      const win = window.open(COPILOT_AGENT_URL, '_blank', 'noopener,noreferrer');
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = COPILOT_AGENT_URL;
+      }
+    } catch {
+      window.location.href = COPILOT_AGENT_URL;
+    }
+  };
+
+  const handleCopyCopilotUrl = () => {
+    navigator.clipboard.writeText(COPILOT_AGENT_URL);
+    setCopiedCopilotUrl(true);
+    setTimeout(() => setCopiedCopilotUrl(false), 2500);
+  };
 
   const queryShortcuts = [
     'Should a 4-hour RiO electronic patient record outage trigger Silver Command?',
@@ -128,16 +149,29 @@ How can I advise your Director on Call response today?`,
             Access your organization's official NHS SharePoint Copilot bot directly for synchronized Trust policies and advice.
           </p>
         </div>
-        <a
-          href="https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-sm transition-all shrink-0 hover:shadow-md min-h-[44px]"
-        >
-          <Bot className="w-4 h-4" />
-          <span>Launch NHS Copilot Bot</span>
-          <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-        </a>
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+          <a
+            href={COPILOT_AGENT_URL}
+            onClick={handleLaunchCopilot}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold text-xs shadow-sm transition-all shrink-0 hover:shadow-md min-h-[44px] cursor-pointer"
+          >
+            <Bot className="w-4 h-4" />
+            <span>Launch NHS Copilot Bot</span>
+            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+          </a>
+
+          <button
+            type="button"
+            onClick={handleCopyCopilotUrl}
+            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-3 rounded-xl bg-blue-950/80 hover:bg-blue-900 active:scale-95 text-blue-200 border border-blue-700/60 font-semibold text-xs transition-all shrink-0 min-h-[44px] cursor-pointer"
+            title="Copy Direct Copilot Agent URL for Teams or Copilot app"
+          >
+            {copiedCopilotUrl ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-blue-300" />}
+            <span className="text-[11px]">{copiedCopilotUrl ? 'Link Copied!' : 'Copy Agent Link'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Header */}

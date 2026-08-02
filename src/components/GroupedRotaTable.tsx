@@ -1,6 +1,6 @@
 import React from 'react';
 import { OnCallRoleInfo, RotaPeriod } from '../types';
-import { Calendar, Phone, CheckCircle2, User, Clock } from 'lucide-react';
+import { Calendar, Phone, CheckCircle2 } from 'lucide-react';
 
 interface GroupedRotaTableProps {
   roles: OnCallRoleInfo[];
@@ -19,12 +19,6 @@ export const GroupedRotaTable: React.FC<GroupedRotaTableProps> = ({
 }) => {
   const todayStr = new Date().toISOString().slice(0, 10);
 
-  // Helper to find officer name for a role in a period
-  const getPersonName = (period: RotaPeriod, roleId: string) => {
-    const found = period.assignments.find((a) => a.roleCategory === roleId);
-    return found ? found.personName : 'TBC';
-  };
-
   // Helper to find phone number for a role
   const getRolePhone = (roleId: string) => {
     const r = roles.find((item) => item.id === roleId);
@@ -35,13 +29,10 @@ export const GroupedRotaTable: React.FC<GroupedRotaTableProps> = ({
   const filteredPeriods = rotaPeriods.filter((period) => {
     if (!searchTerm) return true;
     const term = searchTerm.toLowerCase();
-    const datesMatch =
+    return (
       period.displayStart.toLowerCase().includes(term) ||
-      period.displayEnd.toLowerCase().includes(term);
-    const personMatch = period.assignments.some((a) =>
-      a.personName.toLowerCase().includes(term)
+      period.displayEnd.toLowerCase().includes(term)
     );
-    return datesMatch || personMatch;
   });
 
   return (
@@ -186,15 +177,6 @@ export const GroupedRotaTable: React.FC<GroupedRotaTableProps> = ({
               const isCurrentActive =
                 period.startDate <= todayStr && period.endDate >= todayStr;
 
-              const ldnOfficer = getPersonName(period, 'Ldn_SNoC');
-              const mkOfficer = getPersonName(period, 'MK_MoC');
-              const mhOfficer = getPersonName(period, 'MH_SMoC');
-              const comOfficer = getPersonName(period, 'Com_SMoC');
-              const docOfficer = getPersonName(period, 'DoC');
-
-              const isSearched = (name: string) =>
-                searchTerm && name.toLowerCase().includes(searchTerm.toLowerCase());
-
               return (
                 <tr
                   key={period.id}
@@ -223,58 +205,73 @@ export const GroupedRotaTable: React.FC<GroupedRotaTableProps> = ({
                   </td>
 
                   {/* Ldn-SNoC */}
-                  <td
-                    className={`p-3 border-r border-slate-200 align-top whitespace-pre-line ${
-                      isSearched(ldnOfficer)
-                        ? 'bg-amber-100/70 text-amber-950 font-black'
-                        : 'text-slate-900 font-bold'
-                    }`}
-                  >
-                    {ldnOfficer}
+                  <td className="p-3 border-r border-slate-200 align-top">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-extrabold text-slate-900">Ldn-SNoC On Call</span>
+                      <a
+                        href={`tel:${getRolePhone('Ldn_SNoC').replace(/\s+/g, '')}`}
+                        className="font-mono text-blue-700 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        <Phone className="w-3 h-3 text-blue-600 shrink-0" />
+                        <span>{getRolePhone('Ldn_SNoC')}</span>
+                      </a>
+                    </div>
                   </td>
 
                   {/* MK-MoC */}
-                  <td
-                    className={`p-3 border-r border-slate-200 align-top whitespace-pre-line ${
-                      isSearched(mkOfficer)
-                        ? 'bg-amber-100/70 text-amber-950 font-black'
-                        : 'text-slate-900 font-bold'
-                    }`}
-                  >
-                    {mkOfficer}
+                  <td className="p-3 border-r border-slate-200 align-top">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-extrabold text-slate-900">MK-MoC On Call</span>
+                      <a
+                        href={`tel:${getRolePhone('MK_MoC').replace(/\s+/g, '')}`}
+                        className="font-mono text-rose-700 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        <Phone className="w-3 h-3 text-rose-600 shrink-0" />
+                        <span>{getRolePhone('MK_MoC')}</span>
+                      </a>
+                    </div>
                   </td>
 
                   {/* MH-SMoC */}
-                  <td
-                    className={`p-3 border-r border-slate-200 align-top whitespace-pre-line ${
-                      isSearched(mhOfficer)
-                        ? 'bg-amber-100/70 text-amber-950 font-black'
-                        : 'text-slate-900 font-bold'
-                    }`}
-                  >
-                    {mhOfficer}
+                  <td className="p-3 border-r border-slate-200 align-top">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-extrabold text-slate-900">MH-SMoC On Call</span>
+                      <a
+                        href={`tel:${getRolePhone('MH_SMoC').replace(/\s+/g, '')}`}
+                        className="font-mono text-amber-700 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        <Phone className="w-3 h-3 text-amber-600 shrink-0" />
+                        <span>{getRolePhone('MH_SMoC')}</span>
+                      </a>
+                    </div>
                   </td>
 
                   {/* Com-SMoC */}
-                  <td
-                    className={`p-3 border-r border-slate-200 align-top whitespace-pre-line ${
-                      isSearched(comOfficer)
-                        ? 'bg-amber-100/70 text-amber-950 font-black'
-                        : 'text-slate-900 font-bold'
-                    }`}
-                  >
-                    {comOfficer}
+                  <td className="p-3 border-r border-slate-200 align-top">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-extrabold text-slate-900">Com-SMoC On Call</span>
+                      <a
+                        href={`tel:${getRolePhone('Com_SMoC').replace(/\s+/g, '')}`}
+                        className="font-mono text-sky-700 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        <Phone className="w-3 h-3 text-sky-600 shrink-0" />
+                        <span>{getRolePhone('Com_SMoC')}</span>
+                      </a>
+                    </div>
                   </td>
 
                   {/* DoC */}
-                  <td
-                    className={`p-3 align-top whitespace-pre-line ${
-                      isSearched(docOfficer)
-                        ? 'bg-amber-100/70 text-amber-950 font-black'
-                        : 'text-slate-900 font-bold'
-                    }`}
-                  >
-                    {docOfficer}
+                  <td className="p-3 align-top">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-extrabold text-slate-900">Director On Call</span>
+                      <a
+                        href={`tel:${getRolePhone('DoC').replace(/\s+/g, '')}`}
+                        className="font-mono text-emerald-800 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        <Phone className="w-3 h-3 text-emerald-600 shrink-0" />
+                        <span>{getRolePhone('DoC')}</span>
+                      </a>
+                    </div>
                   </td>
                 </tr>
               );

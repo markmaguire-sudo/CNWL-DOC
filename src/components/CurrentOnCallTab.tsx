@@ -8,12 +8,8 @@ import {
   Check, 
   ShieldAlert, 
   Search, 
-  Send,
-  User,
   Clock,
   ChevronRight,
-  ExternalLink,
-  Sparkles,
   Hospital,
   Users,
   LayoutGrid,
@@ -45,38 +41,33 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
     || rotaPeriods.find(p => p.id === 'period-10')
     || rotaPeriods[0];
 
+  const activeDocAssignment = currentPeriod?.assignments?.find(a => a.roleCategory === 'DoC');
+  const activeDocName = activeDocAssignment?.personName || 'Mark Maguire';
+  const docRole = roles.find(r => r.id === 'DoC');
+
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedRole(id);
     setTimeout(() => setCopiedRole(null), 2000);
   };
 
-  // Helper to find officer name for a role in current period
-  const getOfficerName = (roleId: string) => {
-    const assignment = currentPeriod?.assignments.find(a => a.roleCategory === roleId);
-    return assignment ? assignment.personName : 'On Call Officer';
-  };
-
   const filteredRoles = roles.filter(role => {
-    const officer = getOfficerName(role.id).toLowerCase();
     const roleTitle = role.title.toLowerCase();
     const search = searchTerm.toLowerCase();
-    return officer.includes(search) || roleTitle.includes(search) || role.shortCode.toLowerCase().includes(search);
+    return roleTitle.includes(search) || role.shortCode.toLowerCase().includes(search) || role.phone.includes(search) || role.description.toLowerCase().includes(search);
   });
 
   // Group roles by Heading Category
-  const mentalHealthRoles = filteredRoles.filter(r => r.group === 'Mental Health');
-  const communityRoles = filteredRoles.filter(r => r.group === 'Community');
-  const docRoles = filteredRoles.filter(r => r.group === 'Director on Call' || (!r.group && r.id === 'DoC'));
+  const mentalHealthRoles = filteredRoles.filter(r => r.group === 'Mental Health' || ['Ldn_SNoC', 'MK_MoC', 'MH_SMoC'].includes(r.id));
+  const communityRoles = filteredRoles.filter(r => r.group === 'Community' || r.id === 'Com_SMoC');
 
   const renderRoleCard = (role: OnCallRoleInfo) => {
-    const officerName = getOfficerName(role.id);
     const isCopied = copiedRole === role.id;
 
     return (
       <div
         key={role.id}
-        className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 flex flex-col justify-between shadow-xs transition-all hover:shadow-md relative overflow-hidden group"
+        className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 flex flex-col justify-between shadow-xs transition-all hover:shadow-md relative overflow-hidden group h-full"
       >
         <div className="space-y-3">
           {/* Role Tag & Badge */}
@@ -84,8 +75,9 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
             <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md tracking-wide ${role.color}`}>
               {role.shortCode}
             </span>
-            <span className="text-[10px] bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded font-mono font-medium">
-              24/7 Cover
+            <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-semibold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              24/7 Cover Active
             </span>
           </div>
 
@@ -99,25 +91,10 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
             </p>
           </div>
 
-          {/* Officer Name Card */}
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 border border-blue-200 flex items-center justify-center font-bold text-sm shrink-0">
-              <User className="w-4 h-4" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="text-[10px] text-slate-500 block uppercase tracking-wider font-semibold">
-                Duty Officer On Call
-              </span>
-              <span className="text-sm font-extrabold text-slate-900 truncate block">
-                {officerName}
-              </span>
-            </div>
-          </div>
-
           {/* Dedicated Phone Line Display */}
-          <div className="bg-slate-50 rounded-lg p-2.5 border border-slate-200/80 flex items-center justify-between font-mono text-xs">
-            <span className="text-slate-500 text-[11px]">Direct Line:</span>
-            <span className="font-bold text-emerald-600 text-sm tracking-wide">
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200/80 flex items-center justify-between font-mono text-xs">
+            <span className="text-slate-500 text-[11px] font-sans font-semibold">Direct Call Line:</span>
+            <span className="font-extrabold text-emerald-700 text-base tracking-wide">
               {role.phone}
             </span>
           </div>
@@ -128,7 +105,7 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
           <a
             href={`tel:${role.phone.replace(/\s+/g, '')}`}
             className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs min-h-[44px]"
-            title={`Call ${officerName}`}
+            title={`Call ${role.title}`}
           >
             <Phone className="w-4 h-4" />
             <span>Call Now</span>
@@ -137,13 +114,13 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
           <a
             href={`sms:${role.phone.replace(/\s+/g, '')}`}
             className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
-            title={`SMS ${officerName}`}
+            title={`SMS ${role.title}`}
           >
             <MessageSquare className="w-4 h-4" />
           </a>
 
           <button
-            onClick={() => handleCopy(`${officerName} (${role.title}): ${role.phone}`, role.id)}
+            onClick={() => handleCopy(`${role.title}: ${role.phone}`, role.id)}
             className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
             title="Copy contact info"
           >
@@ -164,24 +141,28 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               LIVE ON CALL ROSTER ACTIVE
             </div>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight text-slate-900">
-              Director on Call Team - Active Shift
+            <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 flex flex-wrap items-center gap-2">
+              <span>Director on Call</span>
+              <span className="text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-3 py-0.5 rounded-xl font-bold">
+                {activeDocName}
+              </span>
             </h2>
             <p className="text-xs text-slate-600 mt-1 flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-blue-600" />
               <span>Shift Window: <strong className="text-slate-900 font-mono">{currentPeriod.displayStart}</strong> to <strong className="text-slate-900 font-mono">{currentPeriod.displayEnd}</strong></span>
             </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <button
-              onClick={() => onNavigateToDirectory?.('INPATIENT')}
-              className="bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold px-3.5 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all min-h-[42px] shadow-xs border border-emerald-300 hover:shadow-md active:scale-95 cursor-pointer"
-            >
-              <Hospital className="w-4 h-4 shrink-0 text-emerald-700" />
-              <span>Inpatient Sites Directory</span>
-              <ChevronRight className="w-3 h-3 text-emerald-800" />
-            </button>
+            {docRole && (
+              <div className="mt-3 flex items-center gap-2 pt-2.5 border-t border-slate-100">
+                <span className="text-xs text-slate-500 font-semibold">DoC Direct Line:</span>
+                <a
+                  href={`tel:${docRole.phone.replace(/\s+/g, '')}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-xs shadow-xs transition-all cursor-pointer min-h-[36px]"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>Call {docRole.phone}</span>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -276,7 +257,7 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Search on call officers by name or role..."
+            placeholder="Search on call roles or contact numbers..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors min-h-[40px]"
@@ -285,7 +266,7 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
 
         <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0">
           <span className="text-xs text-slate-500 font-mono px-2 hidden md:inline">
-            {filteredRoles.length} Duty Officers
+            {filteredRoles.length} On-Call Lines
           </span>
 
           <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
@@ -326,7 +307,7 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
       ) : (
         /* Grouped Rota Officers Cards */
         <div className="space-y-6">
-          {/* Group 1: Mental Health Heading */}
+          {/* Mental Health Senior Managers */}
           {mentalHealthRoles.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-blue-200 pb-2">
@@ -336,25 +317,25 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
                   </span>
                   <div>
                     <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                      Mental Health On-Call Staff
+                      Mental Health Senior Managers on Call
                     </h3>
                     <p className="text-[11px] text-slate-500">
-                      Ldn-SNoC (Senior Nurse), MK-MoC (Milton Keynes Manager) & MH-SMoC (Senior Manager)
+                      Ldn-SNoC (Senior Nurse), MK-MoC (Milton Keynes) & MH-SMoC (Senior Manager)
                     </p>
                   </div>
                 </div>
                 <span className="text-xs font-mono font-bold bg-blue-50 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
-                  {mentalHealthRoles.length} Roles
+                  {mentalHealthRoles.length} Active Lines
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
                 {mentalHealthRoles.map(renderRoleCard)}
               </div>
             </div>
           )}
 
-          {/* Group 2: Community Heading */}
+          {/* Community Senior Manager */}
           {communityRoles.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-sky-200 pb-2">
@@ -364,7 +345,7 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
                   </span>
                   <div>
                     <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                      Community On-Call Staff
+                      Community Senior Manager on Call
                     </h3>
                     <p className="text-[11px] text-slate-500">
                       Com-SMoC (Senior Operational Manager for Community Services & Urgent Care)
@@ -372,40 +353,12 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
                   </div>
                 </div>
                 <span className="text-xs font-mono font-bold bg-sky-50 text-sky-800 px-2.5 py-0.5 rounded-full border border-sky-200">
-                  {communityRoles.length} Role
+                  {communityRoles.length} Active Line
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
                 {communityRoles.map(renderRoleCard)}
-              </div>
-            </div>
-          )}
-
-          {/* Group 3: Director on Call (DoC) Heading */}
-          {docRoles.length > 0 && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-emerald-200 pb-2">
-                <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-emerald-100 text-emerald-800 rounded-lg font-bold text-xs border border-emerald-200">
-                    🎖️
-                  </span>
-                  <div>
-                    <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                      Director on Call (DoC)
-                    </h3>
-                    <p className="text-[11px] text-slate-500">
-                      Executive Lead for Trust-Wide On-Call & Major Incident Command
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-mono font-bold bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  {docRoles.length} Role
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
-                {docRoles.map(renderRoleCard)}
               </div>
             </div>
           )}
