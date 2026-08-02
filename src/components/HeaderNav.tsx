@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   PhoneCall, 
-  Calendar, 
   Bot, 
   ShieldCheck,
   Clock,
@@ -70,39 +69,6 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span>Direct Access Unlocked</span>
             </span>
-          </div>
-        </div>
-
-        {/* Main App Title */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-600 text-white shadow-sm shrink-0">
-              <PhoneCall className="w-5 h-5" />
-            </div>
-            <div>
-              <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
-                Director on Call
-                <span className="text-[10px] bg-blue-50 text-blue-700 border border-blue-200 font-mono font-semibold px-2 py-0.5 rounded-full">
-                  Info Resource
-                </span>
-              </h1>
-              <p className="text-xs text-slate-500">
-                On-Call Directory, Escalation Protocols & METHANE Guide
-              </p>
-            </div>
-          </div>
-
-          {/* Current Active Rota Period Indicator */}
-          <div className="bg-slate-100 border border-slate-200 rounded-xl px-3 py-1.5 text-xs flex items-center gap-2 text-slate-700 shrink-0 self-start sm:self-auto">
-            <Calendar className="w-4 h-4 text-blue-600 shrink-0" />
-            <div>
-              <span className="text-slate-500 text-[10px] block uppercase tracking-wider font-semibold">
-                Current Rota Shift
-              </span>
-              <span className="font-semibold text-slate-900">
-                Fri 31/07/2026 – Tue 04/08/2026
-              </span>
-            </div>
           </div>
         </div>
 

@@ -839,13 +839,6 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
                     </a>
                   </div>
                 )}
-
-                {/* Notes */}
-                {contact.notes && (
-                  <div className="text-[11px] text-slate-500 italic bg-slate-50/60 p-2.5 rounded-lg border border-slate-100">
-                    "{contact.notes}"
-                  </div>
-                )}
               </div>
             </div>
           ))}

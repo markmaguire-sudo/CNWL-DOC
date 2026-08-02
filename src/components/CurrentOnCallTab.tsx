@@ -72,10 +72,9 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
             <span className={`text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md tracking-wide shrink-0 ${role.color}`}>
               {role.shortCode}
             </span>
-            <span className="text-[9px] sm:text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1 sm:px-2 py-0.5 rounded font-mono font-semibold flex items-center gap-1 shrink-0">
+            <span className="text-[9px] sm:text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 sm:px-2 py-0.5 rounded font-mono font-semibold flex items-center gap-1 shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="hidden xs:inline">24/7 Cover Active</span>
-              <span className="xs:hidden">24/7</span>
+              <span>Cover Active</span>
             </span>
           </div>
 
@@ -131,10 +130,6 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
       <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold mb-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              LIVE ON CALL ROSTER ACTIVE
-            </div>
             <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 flex flex-wrap items-center gap-2">
               <span>Director on Call</span>
               <span className="text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-3 py-0.5 rounded-xl font-bold">
@@ -245,106 +240,58 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
         </div>
       )}
 
-      {/* View Mode & Active Lines Bar */}
-      <div className="flex items-center justify-between gap-3 bg-white p-2.5 rounded-2xl border border-slate-200 shadow-xs">
-        <span className="text-xs text-slate-600 font-mono font-bold px-2">
-          {filteredRoles.length} Active On-Call Lines
-        </span>
+      {/* Grouped Rota Officers Cards */}
+      <div className="space-y-6">
+        {/* Mental Health Senior Managers */}
+        {mentalHealthRoles.length > 0 && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between border-b border-blue-200 pb-2">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 bg-blue-100 text-blue-800 rounded-lg font-bold text-xs border border-blue-200">
+                  🧠
+                </span>
+                <div>
+                  <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
+                    Mental Health Senior Managers on Call
+                  </h3>
+                  <p className="text-[11px] text-slate-500">
+                    Ldn-SNoC (Senior Nurse), MK-MoC (Milton Keynes) & MH-SMoC (Senior Manager)
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button
-              onClick={() => setViewMode('CARDS')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 min-h-[34px] ${
-                viewMode === 'CARDS'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              <span>Grouped Cards</span>
-            </button>
-
-            <button
-              onClick={() => setViewMode('TABLE')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 min-h-[34px] ${
-                viewMode === 'TABLE'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Table className="w-3.5 h-3.5" />
-              <span>Grouped Rota Table</span>
-            </button>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-stretch">
+              {mentalHealthRoles.map(renderRoleCard)}
+            </div>
           </div>
-        </div>
+        )}
 
-      {viewMode === 'TABLE' ? (
-        <GroupedRotaTable
-          roles={roles}
-          rotaPeriods={rotaPeriods}
-          isAuthenticated={isAuthenticated}
-          searchTerm={searchTerm}
-        />
-      ) : (
-        /* Grouped Rota Officers Cards */
-        <div className="space-y-6">
-          {/* Mental Health Senior Managers */}
-          {mentalHealthRoles.length > 0 && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-blue-200 pb-2">
-                <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-blue-100 text-blue-800 rounded-lg font-bold text-xs border border-blue-200">
-                    🧠
-                  </span>
-                  <div>
-                    <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                      Mental Health Senior Managers on Call
-                    </h3>
-                    <p className="text-[11px] text-slate-500">
-                      Ldn-SNoC (Senior Nurse), MK-MoC (Milton Keynes) & MH-SMoC (Senior Manager)
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-mono font-bold bg-blue-50 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
-                  {mentalHealthRoles.length} Active Lines
+        {/* Community Senior Manager */}
+        {communityRoles.length > 0 && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between border-b border-sky-200 pb-2">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 bg-sky-100 text-sky-800 rounded-lg font-bold text-xs border border-sky-200">
+                  🏡
                 </span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-stretch">
-                {mentalHealthRoles.map(renderRoleCard)}
+                <div>
+                  <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
+                    Community Senior Manager on Call
+                  </h3>
+                  <p className="text-[11px] text-slate-500">
+                    Com-SMoC (Senior Operational Manager for Community Services & Urgent Care)
+                  </p>
+                </div>
               </div>
             </div>
-          )}
 
-          {/* Community Senior Manager */}
-          {communityRoles.length > 0 && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-sky-200 pb-2">
-                <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-sky-100 text-sky-800 rounded-lg font-bold text-xs border border-sky-200">
-                    🏡
-                  </span>
-                  <div>
-                    <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                      Community Senior Manager on Call
-                    </h3>
-                    <p className="text-[11px] text-slate-500">
-                      Com-SMoC (Senior Operational Manager for Community Services & Urgent Care)
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-mono font-bold bg-sky-50 text-sky-800 px-2.5 py-0.5 rounded-full border border-sky-200">
-                  {communityRoles.length} Active Line
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
-                {communityRoles.map(renderRoleCard)}
-              </div>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-stretch">
+              {communityRoles.map(renderRoleCard)}
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

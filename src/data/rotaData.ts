@@ -52,9 +52,9 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
   {
     id: 'period-1',
     startDate: '2026-06-30',
-    endDate: '2026-07-03',
+    endDate: '2026-07-06',
     displayStart: 'Tue 30/06/2026',
-    displayEnd: 'Fri 03/07/2026',
+    displayEnd: 'Mon 06/07/2026',
     assignments: [
       { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
       { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
@@ -65,24 +65,10 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
   },
   {
     id: 'period-2',
-    startDate: '2026-07-03',
-    endDate: '2026-07-07',
-    displayStart: 'Fri 03/07/2026',
-    displayEnd: 'Tue 07/07/2026',
-    assignments: [
-      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Ross Graves' },
-      { roleCategory: 'Com_SMoC', personName: 'Ross Graves' },
-      { roleCategory: 'DoC', personName: 'Ross Graves' }
-    ]
-  },
-  {
-    id: 'period-3',
     startDate: '2026-07-07',
-    endDate: '2026-07-10',
+    endDate: '2026-07-13',
     displayStart: 'Tue 07/07/2026',
-    displayEnd: 'Fri 10/07/2026',
+    displayEnd: 'Mon 13/07/2026',
     assignments: [
       { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
       { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
@@ -92,25 +78,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-4',
-    startDate: '2026-07-10',
-    endDate: '2026-07-14',
-    displayStart: 'Fri 10/07/2026',
-    displayEnd: 'Tue 14/07/2026',
-    assignments: [
-      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves' },
-      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Nick Green' },
-      { roleCategory: 'Com_SMoC', personName: 'Nick Green' },
-      { roleCategory: 'DoC', personName: 'Nick Green' }
-    ]
-  },
-  {
-    id: 'period-5',
+    id: 'period-3',
     startDate: '2026-07-14',
-    endDate: '2026-07-17',
+    endDate: '2026-07-20',
     displayStart: 'Tue 14/07/2026',
-    displayEnd: 'Fri 17/07/2026',
+    displayEnd: 'Mon 20/07/2026',
     assignments: [
       { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
       { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
@@ -120,25 +92,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-6',
-    startDate: '2026-07-17',
-    endDate: '2026-07-21',
-    displayStart: 'Fri 17/07/2026',
-    displayEnd: 'Tue 21/07/2026',
-    assignments: [
-      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Tracy White' },
-      { roleCategory: 'Com_SMoC', personName: 'Tracy White' },
-      { roleCategory: 'DoC', personName: 'Tracy White' }
-    ]
-  },
-  {
-    id: 'period-7',
+    id: 'period-4',
     startDate: '2026-07-21',
-    endDate: '2026-07-24',
+    endDate: '2026-07-27',
     displayStart: 'Tue 21/07/2026',
-    displayEnd: 'Fri 24/07/2026',
+    displayEnd: 'Mon 27/07/2026',
     assignments: [
       { roleCategory: 'Ldn_SNoC', personName: 'Luis Gracia' },
       { roleCategory: 'MK_MoC', personName: 'James Clay' },
@@ -148,25 +106,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-8',
-    startDate: '2026-07-24',
-    endDate: '2026-07-28',
-    displayStart: 'Fri 24/07/2026',
-    displayEnd: 'Tue 28/07/2026',
-    assignments: [
-      { roleCategory: 'Ldn_SNoC', personName: 'Stephen Burke (24/07 - 27/07) / Lucy Cooper (27/07 - 31/07)' },
-      { roleCategory: 'MK_MoC', personName: 'Jemma Cain (24/07 - 27/07) / Lorraine Shelby (27/07 - 31/07)' },
-      { roleCategory: 'MH_SMoC', personName: 'Sarah Farooq (24/07 - 27/07) / Vicky Hancock (27/07 - 31/07)' },
-      { roleCategory: 'Com_SMoC', personName: 'Mary Smith' },
-      { roleCategory: 'DoC', personName: 'Mark Maguire' }
-    ]
-  },
-  {
-    id: 'period-9',
+    id: 'period-5',
     startDate: '2026-07-28',
-    endDate: '2026-07-31',
+    endDate: '2026-08-03',
     displayStart: 'Tue 28/07/2026',
-    displayEnd: 'Fri 31/07/2026',
+    displayEnd: 'Mon 03/08/2026',
     assignments: [
       { roleCategory: 'Ldn_SNoC', personName: 'Lucy Cooper' },
       { roleCategory: 'MK_MoC', personName: 'Lorraine Shelby' },
@@ -176,25 +120,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-10',
-    startDate: '2026-07-31',
-    endDate: '2026-08-04',
-    displayStart: 'Fri 31/07/2026',
-    displayEnd: 'Tue 04/08/2026',
-    assignments: [
-      { roleCategory: 'Ldn_SNoC', personName: 'Gemma Brown (31/07 - 03/08) / Kwame Boaitey (03/08 - 07/08)' },
-      { roleCategory: 'MK_MoC', personName: 'Caroline Davies (31/07 - 03/08) / Tsitsi Mlilo (03/08 - 07/08)' },
-      { roleCategory: 'MH_SMoC', personName: 'Nick Bygraves (31/07 - 03/08) / Oisagie Usideme (03/08 - 07/08)' },
-      { roleCategory: 'Com_SMoC', personName: 'Mel Cahil' },
-      { roleCategory: 'DoC', personName: 'Sabrina Philips' }
-    ]
-  },
-  {
-    id: 'period-11',
+    id: 'period-6',
     startDate: '2026-08-04',
-    endDate: '2026-08-07',
+    endDate: '2026-08-10',
     displayStart: 'Tue 04/08/2026',
-    displayEnd: 'Fri 07/08/2026',
+    displayEnd: 'Mon 10/08/2026',
     assignments: [
       { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
       { roleCategory: 'MK_MoC', personName: 'Tsitsi Mlilo' },
@@ -204,25 +134,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-12',
-    startDate: '2026-08-07',
-    endDate: '2026-08-11',
-    displayStart: 'Fri 07/08/2026',
-    displayEnd: 'Tue 11/08/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'Kim Cox' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Kim Cox' },
-      { roleCategory: 'Com_SMoC', personName: 'Kim Cox' }
-    ]
-  },
-  {
-    id: 'period-13',
+    id: 'period-7',
     startDate: '2026-08-11',
-    endDate: '2026-08-14',
+    endDate: '2026-08-17',
     displayStart: 'Tue 11/08/2026',
-    displayEnd: 'Fri 14/08/2026',
+    displayEnd: 'Mon 17/08/2026',
     assignments: [
       { roleCategory: 'DoC', personName: 'Doug Stewart' },
       { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
@@ -232,25 +148,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-14',
-    startDate: '2026-08-14',
-    endDate: '2026-08-18',
-    displayStart: 'Fri 14/08/2026',
-    displayEnd: 'Tue 18/08/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'Doug Stewart' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
-      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Doug Stewart' },
-      { roleCategory: 'Com_SMoC', personName: 'Doug Stewart' }
-    ]
-  },
-  {
-    id: 'period-15',
+    id: 'period-8',
     startDate: '2026-08-18',
-    endDate: '2026-08-21',
+    endDate: '2026-08-24',
     displayStart: 'Tue 18/08/2026',
-    displayEnd: 'Fri 21/08/2026',
+    displayEnd: 'Mon 24/08/2026',
     assignments: [
       { roleCategory: 'DoC', personName: 'Ryan Kemp' },
       { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves' },
@@ -260,25 +162,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-16',
-    startDate: '2026-08-21',
-    endDate: '2026-08-25',
-    displayStart: 'Fri 21/08/2026',
-    displayEnd: 'Tue 25/08/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'Ryan Kemp' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Ryan Kemp' },
-      { roleCategory: 'Com_SMoC', personName: 'Ryan Kemp' }
-    ]
-  },
-  {
-    id: 'period-17',
+    id: 'period-9',
     startDate: '2026-08-25',
-    endDate: '2026-08-28',
+    endDate: '2026-08-31',
     displayStart: 'Tue 25/08/2026',
-    displayEnd: 'Fri 28/08/2026',
+    displayEnd: 'Mon 31/08/2026',
     assignments: [
       { roleCategory: 'DoC', personName: 'William Sakala' },
       { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
@@ -288,25 +176,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-18',
-    startDate: '2026-08-28',
-    endDate: '2026-09-01',
-    displayStart: 'Fri 28/08/2026',
-    displayEnd: 'Tue 01/09/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'William Sakala' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
-      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'William Sakala' },
-      { roleCategory: 'Com_SMoC', personName: 'William Sakala' }
-    ]
-  },
-  {
-    id: 'period-19',
+    id: 'period-10',
     startDate: '2026-09-01',
-    endDate: '2026-09-04',
+    endDate: '2026-09-07',
     displayStart: 'Tue 01/09/2026',
-    displayEnd: 'Fri 04/09/2026',
+    displayEnd: 'Mon 07/09/2026',
     assignments: [
       { roleCategory: 'DoC', personName: 'Amanda Pithouse' },
       { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
@@ -316,25 +190,11 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-20',
-    startDate: '2026-09-04',
-    endDate: '2026-09-08',
-    displayStart: 'Fri 04/09/2026',
-    displayEnd: 'Tue 08/09/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'Amanda Pithouse' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Amanda Pithouse' },
-      { roleCategory: 'Com_SMoC', personName: 'Amanda Pithouse' }
-    ]
-  },
-  {
-    id: 'period-21',
+    id: 'period-11',
     startDate: '2026-09-08',
-    endDate: '2026-09-11',
+    endDate: '2026-09-14',
     displayStart: 'Tue 08/09/2026',
-    displayEnd: 'Fri 11/09/2026',
+    displayEnd: 'Mon 14/09/2026',
     assignments: [
       { roleCategory: 'DoC', personName: 'Alison Butler' },
       { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
@@ -344,43 +204,15 @@ export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
     ]
   },
   {
-    id: 'period-22',
-    startDate: '2026-09-11',
-    endDate: '2026-09-15',
-    displayStart: 'Fri 11/09/2026',
-    displayEnd: 'Tue 15/09/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'Alison Butler' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Alison Butler' },
-      { roleCategory: 'Com_SMoC', personName: 'Alison Butler' }
-    ]
-  },
-  {
-    id: 'period-23',
+    id: 'period-12',
     startDate: '2026-09-15',
-    endDate: '2026-09-18',
+    endDate: '2026-09-21',
     displayStart: 'Tue 15/09/2026',
-    displayEnd: 'Fri 18/09/2026',
+    displayEnd: 'Mon 21/09/2026',
     assignments: [
       { roleCategory: 'DoC', personName: 'Graeme Caul' },
       { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
       { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Graeme Caul' },
-      { roleCategory: 'Com_SMoC', personName: 'Graeme Caul' }
-    ]
-  },
-  {
-    id: 'period-24',
-    startDate: '2026-09-18',
-    endDate: '2026-09-22',
-    displayStart: 'Fri 18/09/2026',
-    displayEnd: 'Tue 22/09/2026',
-    assignments: [
-      { roleCategory: 'DoC', personName: 'Graeme Caul' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
       { roleCategory: 'MH_SMoC', personName: 'Graeme Caul' },
       { roleCategory: 'Com_SMoC', personName: 'Graeme Caul' }
     ]
