@@ -52,18 +52,6 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           <div className="flex items-center gap-2 sm:gap-3">
             <a
               href="https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr"
-              onClick={(e) => {
-                e.preventDefault();
-                const url = "https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr";
-                try {
-                  const win = window.open(url, '_blank', 'noopener,noreferrer');
-                  if (!win || win.closed || typeof win.closed === 'undefined') {
-                    window.location.href = url;
-                  }
-                } catch {
-                  window.location.href = url;
-                }
-              }}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer min-h-[32px]"

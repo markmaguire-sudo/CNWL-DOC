@@ -49,18 +49,6 @@ How can I advise your Director on Call response today?`,
 
   const COPILOT_AGENT_URL = "https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr";
 
-  const handleLaunchCopilot = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    try {
-      const win = window.open(COPILOT_AGENT_URL, '_blank', 'noopener,noreferrer');
-      if (!win || win.closed || typeof win.closed === 'undefined') {
-        window.location.href = COPILOT_AGENT_URL;
-      }
-    } catch {
-      window.location.href = COPILOT_AGENT_URL;
-    }
-  };
-
   const handleCopyCopilotUrl = () => {
     navigator.clipboard.writeText(COPILOT_AGENT_URL);
     setCopiedCopilotUrl(true);
@@ -152,7 +140,6 @@ How can I advise your Director on Call response today?`,
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <a
             href={COPILOT_AGENT_URL}
-            onClick={handleLaunchCopilot}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold text-xs shadow-sm transition-all shrink-0 hover:shadow-md min-h-[44px] cursor-pointer"

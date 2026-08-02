@@ -4,10 +4,7 @@ import { GroupedRotaTable } from './GroupedRotaTable';
 import { 
   Phone, 
   MessageSquare, 
-  Copy, 
-  Check, 
   ShieldAlert, 
-  Search, 
   Clock,
   ChevronRight,
   Hospital,
@@ -67,65 +64,62 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
     return (
       <div
         key={role.id}
-        className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 flex flex-col justify-between shadow-xs transition-all hover:shadow-md relative overflow-hidden group h-full"
+        className="bg-white border border-slate-200 hover:border-slate-300 rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col justify-between shadow-xs transition-all hover:shadow-md relative overflow-hidden group h-full min-w-0"
       >
-        <div className="space-y-3">
+        <div className="space-y-1.5 sm:space-y-3 min-w-0">
           {/* Role Tag & Badge */}
-          <div className="flex items-center justify-between gap-2">
-            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md tracking-wide ${role.color}`}>
+          <div className="flex items-center justify-between gap-1 flex-wrap sm:flex-nowrap">
+            <span className={`text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md tracking-wide shrink-0 ${role.color}`}>
               {role.shortCode}
             </span>
-            <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-semibold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              24/7 Cover Active
+            <span className="text-[9px] sm:text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1 sm:px-2 py-0.5 rounded font-mono font-semibold flex items-center gap-1 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="hidden xs:inline">24/7 Cover Active</span>
+              <span className="xs:hidden">24/7</span>
             </span>
           </div>
 
           {/* Role Title & Description */}
-          <div>
-            <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+          <div className="min-w-0">
+            <h3 className="text-[11px] sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
               {role.title}
             </h3>
-            <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">
+            <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 line-clamp-2 leading-tight hidden xs:block">
               {role.description}
             </p>
           </div>
 
           {/* Dedicated Phone Line Display */}
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200/80 flex items-center justify-between font-mono text-xs">
-            <span className="text-slate-500 text-[11px] font-sans font-semibold">Direct Call Line:</span>
-            <span className="font-extrabold text-emerald-700 text-base tracking-wide">
+          <div className="bg-slate-50 rounded-lg sm:rounded-xl p-1.5 sm:p-3 border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-0.5 sm:gap-2 font-mono text-[10px] sm:text-xs">
+            <span className="text-slate-500 text-[9px] sm:text-[11px] font-sans font-semibold">Direct Line:</span>
+            <a
+              href={`tel:${role.phone.replace(/\s+/g, '')}`}
+              className="font-extrabold text-emerald-700 text-[11px] sm:text-base tracking-tight sm:tracking-wide hover:underline truncate w-full sm:w-auto"
+            >
               {role.phone}
-            </span>
+            </a>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-4 mt-3 border-t border-slate-100 flex items-center gap-2">
+        <div className="pt-2 sm:pt-4 mt-2 sm:mt-3 border-t border-slate-100 flex items-center gap-1 sm:gap-2">
           <a
             href={`tel:${role.phone.replace(/\s+/g, '')}`}
-            className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs min-h-[44px]"
+            className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 sm:py-2.5 px-1 sm:px-3 rounded-lg sm:rounded-xl text-[10px] sm:text-xs flex items-center justify-center gap-1 transition-colors shadow-xs min-h-[34px] sm:min-h-[44px]"
             title={`Call ${role.title}`}
           >
-            <Phone className="w-4 h-4" />
-            <span>Call Now</span>
+            <Phone className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+            <span className="text-[10px] sm:text-xs">Call</span>
           </a>
 
           <a
             href={`sms:${role.phone.replace(/\s+/g, '')}`}
-            className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
+            className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-1 sm:p-2.5 rounded-lg sm:rounded-xl text-xs flex items-center justify-center gap-1 transition-colors min-h-[34px] sm:min-h-[44px] shrink-0"
             title={`SMS ${role.title}`}
           >
-            <MessageSquare className="w-4 h-4" />
+            <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="text-[10px] sm:text-xs">SMS Text</span>
           </a>
-
-          <button
-            onClick={() => handleCopy(`${role.title}: ${role.phone}`, role.id)}
-            className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-2.5 rounded-xl text-xs flex items-center justify-center transition-colors min-h-[44px] min-w-[44px]"
-            title="Copy contact info"
-          >
-            {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-600" />}
-          </button>
         </div>
       </div>
     );
@@ -251,25 +245,13 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
         </div>
       )}
 
-      {/* Search & Filter & View Mode Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-2.5 rounded-2xl border border-slate-200 shadow-xs">
-        <div className="relative flex-1">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search on call roles or contact numbers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors min-h-[40px]"
-          />
-        </div>
+      {/* View Mode & Active Lines Bar */}
+      <div className="flex items-center justify-between gap-3 bg-white p-2.5 rounded-2xl border border-slate-200 shadow-xs">
+        <span className="text-xs text-slate-600 font-mono font-bold px-2">
+          {filteredRoles.length} Active On-Call Lines
+        </span>
 
-        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0">
-          <span className="text-xs text-slate-500 font-mono px-2 hidden md:inline">
-            {filteredRoles.length} On-Call Lines
-          </span>
-
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button
               onClick={() => setViewMode('CARDS')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 min-h-[34px] ${
@@ -295,7 +277,6 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
             </button>
           </div>
         </div>
-      </div>
 
       {viewMode === 'TABLE' ? (
         <GroupedRotaTable
@@ -329,7 +310,7 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-stretch">
                 {mentalHealthRoles.map(renderRoleCard)}
               </div>
             </div>
