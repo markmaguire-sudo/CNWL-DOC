@@ -2,44 +2,31 @@ import { OnCallRoleInfo, RotaPeriod, EscalationPlaybook, CriticalIncident } from
 
 export const DEDICATED_ROLES: OnCallRoleInfo[] = [
   {
-    id: 'DoC_MentalHealth',
-    title: 'Director on Call - Mental Health',
-    shortCode: 'MH-DoC',
-    phone: '0800 090 2464',
-    description: 'Executive Lead for Mental Health Services, Inpatient Wards & Acute Crisis Escalations',
-    color: 'bg-indigo-600 text-white'
-  },
-  {
-    id: 'DoC_Community',
-    title: 'Director on Call - Community',
-    shortCode: 'Com-DoC',
-    phone: '0800 090 2465',
-    description: 'Executive Lead for Community Health Services, Physical Health & Off-site Facilities',
-    color: 'bg-emerald-600 text-white'
-  },
-  {
     id: 'Ldn_SNoC',
-    title: 'Senior Nurse on Call - London',
+    title: 'Senior Nurse for CNWL London',
     shortCode: 'Ldn-SNoC',
-    phone: '0800 090 2467',
+    phone: '0800 090 2464',
     description: 'Senior Clinical Nursing Lead for CNWL London Units & Inpatient Bed Management',
-    color: 'bg-amber-600 text-white'
+    color: 'bg-blue-600 text-white',
+    group: 'Mental Health'
   },
   {
     id: 'MK_MoC',
-    title: 'Manager on Call - Milton Keynes',
+    title: 'Manager for CNWL Milton Keynes',
     shortCode: 'MK-MoC',
-    phone: '0800 090 2466',
-    description: 'Operational Operational Manager Lead for Milton Keynes Community & Mental Health Services',
-    color: 'bg-blue-600 text-white'
+    phone: '0800 090 2465',
+    description: 'Operational Manager Lead for Milton Keynes Community & Mental Health Services',
+    color: 'bg-rose-600 text-white',
+    group: 'Mental Health'
   },
   {
     id: 'MH_SMoC',
     title: 'Senior Manager - Mental Health',
     shortCode: 'MH-SMoC',
-    phone: '07740 514 459',
+    phone: '0800 090 2467',
     description: 'Senior Operational Manager for Mental Health Acute & Crisis Teams',
-    color: 'bg-purple-600 text-white'
+    color: 'bg-amber-600 text-white',
+    group: 'Mental Health'
   },
   {
     id: 'Com_SMoC',
@@ -47,99 +34,355 @@ export const DEDICATED_ROLES: OnCallRoleInfo[] = [
     shortCode: 'Com-SMoC',
     phone: '0800 090 2466',
     description: 'Senior Operational Manager for Community Services & Urgent Care Pathways',
-    color: 'bg-teal-600 text-white'
+    color: 'bg-sky-600 text-white',
+    group: 'Community'
+  },
+  {
+    id: 'DoC',
+    title: 'Director for CNWL',
+    shortCode: 'DoC',
+    phone: '07740 514 459',
+    description: 'Executive Director Lead for Trust-Wide On-Call & Acute Crisis Escalations',
+    color: 'bg-emerald-800 text-white',
+    group: 'Director on Call'
   }
 ];
 
 export const INITIAL_ROTA_PERIODS: RotaPeriod[] = [
   {
     id: 'period-1',
+    startDate: '2026-06-30',
+    endDate: '2026-07-03',
+    displayStart: 'Tue 30/06/2026',
+    displayEnd: 'Fri 03/07/2026',
+    assignments: [
+      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Ross Graves' },
+      { roleCategory: 'Com_SMoC', personName: 'Ross Graves' },
+      { roleCategory: 'DoC', personName: 'Ross Graves' }
+    ]
+  },
+  {
+    id: 'period-2',
+    startDate: '2026-07-03',
+    endDate: '2026-07-07',
+    displayStart: 'Fri 03/07/2026',
+    displayEnd: 'Tue 07/07/2026',
+    assignments: [
+      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Ross Graves' },
+      { roleCategory: 'Com_SMoC', personName: 'Ross Graves' },
+      { roleCategory: 'DoC', personName: 'Ross Graves' }
+    ]
+  },
+  {
+    id: 'period-3',
+    startDate: '2026-07-07',
+    endDate: '2026-07-10',
+    displayStart: 'Tue 07/07/2026',
+    displayEnd: 'Fri 10/07/2026',
+    assignments: [
+      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Nick Green' },
+      { roleCategory: 'Com_SMoC', personName: 'Nick Green' },
+      { roleCategory: 'DoC', personName: 'Nick Green' }
+    ]
+  },
+  {
+    id: 'period-4',
+    startDate: '2026-07-10',
+    endDate: '2026-07-14',
+    displayStart: 'Fri 10/07/2026',
+    displayEnd: 'Tue 14/07/2026',
+    assignments: [
+      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Nick Green' },
+      { roleCategory: 'Com_SMoC', personName: 'Nick Green' },
+      { roleCategory: 'DoC', personName: 'Nick Green' }
+    ]
+  },
+  {
+    id: 'period-5',
+    startDate: '2026-07-14',
+    endDate: '2026-07-17',
+    displayStart: 'Tue 14/07/2026',
+    displayEnd: 'Fri 17/07/2026',
+    assignments: [
+      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Tracy White' },
+      { roleCategory: 'Com_SMoC', personName: 'Tracy White' },
+      { roleCategory: 'DoC', personName: 'Tracy White' }
+    ]
+  },
+  {
+    id: 'period-6',
+    startDate: '2026-07-17',
+    endDate: '2026-07-21',
+    displayStart: 'Fri 17/07/2026',
+    displayEnd: 'Tue 21/07/2026',
+    assignments: [
+      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Tracy White' },
+      { roleCategory: 'Com_SMoC', personName: 'Tracy White' },
+      { roleCategory: 'DoC', personName: 'Tracy White' }
+    ]
+  },
+  {
+    id: 'period-7',
     startDate: '2026-07-21',
     endDate: '2026-07-24',
     displayStart: 'Tue 21/07/2026',
     displayEnd: 'Fri 24/07/2026',
     assignments: [
-      { roleCategory: 'DoC_MentalHealth', personName: 'Luis Gracia' },
-      { roleCategory: 'DoC_Community', personName: 'James Clay' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Mark Maguire' },
-      { roleCategory: 'Com_SMoC', personName: 'Mark Maguire' }
+      { roleCategory: 'Ldn_SNoC', personName: 'Luis Gracia' },
+      { roleCategory: 'MK_MoC', personName: 'James Clay' },
+      { roleCategory: 'MH_SMoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'Com_SMoC', personName: 'Mary Smith' },
+      { roleCategory: 'DoC', personName: 'Mark Maguire' }
     ]
   },
   {
-    id: 'period-2a',
+    id: 'period-8',
     startDate: '2026-07-24',
-    endDate: '2026-07-27',
+    endDate: '2026-07-28',
     displayStart: 'Fri 24/07/2026',
-    displayEnd: 'Mon 27/07/2026',
+    displayEnd: 'Tue 28/07/2026',
     assignments: [
-      { roleCategory: 'DoC_MentalHealth', personName: 'Stephen Burke', startDate: '24/07/2026', endDate: '27/07/2026' },
-      { roleCategory: 'DoC_Community', personName: 'Jemma Cain', startDate: '24/07/2026', endDate: '27/07/2026' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq', startDate: '24/07/2026', endDate: '27/07/2026' },
-      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
-      { roleCategory: 'MH_SMoC', personName: 'Mark Maguire' },
-      { roleCategory: 'Com_SMoC', personName: 'Mark Maguire' }
+      { roleCategory: 'Ldn_SNoC', personName: 'Stephen Burke (24/07 - 27/07) / Lucy Cooper (27/07 - 31/07)' },
+      { roleCategory: 'MK_MoC', personName: 'Jemma Cain (24/07 - 27/07) / Lorraine Shelby (27/07 - 31/07)' },
+      { roleCategory: 'MH_SMoC', personName: 'Sarah Farooq (24/07 - 27/07) / Vicky Hancock (27/07 - 31/07)' },
+      { roleCategory: 'Com_SMoC', personName: 'Mary Smith' },
+      { roleCategory: 'DoC', personName: 'Mark Maguire' }
     ]
   },
   {
-    id: 'period-2b',
-    startDate: '2026-07-27',
-    endDate: '2026-07-31',
-    displayStart: 'Mon 27/07/2026',
-    displayEnd: 'Fri 31/07/2026',
-    assignments: [
-      { roleCategory: 'DoC_MentalHealth', personName: 'Lucy Cooper', startDate: '27/07/2026', endDate: '31/07/2026' },
-      { roleCategory: 'DoC_Community', personName: 'Lorraine Shelby', startDate: '27/07/2026', endDate: '31/07/2026' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock', startDate: '27/07/2026', endDate: '31/07/2026' },
-      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
-      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
-    ]
-  },
-  {
-    id: 'period-3',
+    id: 'period-9',
     startDate: '2026-07-28',
     endDate: '2026-07-31',
     displayStart: 'Tue 28/07/2026',
     displayEnd: 'Fri 31/07/2026',
     assignments: [
-      { roleCategory: 'DoC_MentalHealth', personName: 'Lucy Cooper' },
-      { roleCategory: 'DoC_Community', personName: 'Lorraine Shelby' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
-      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
-      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+      { roleCategory: 'Ldn_SNoC', personName: 'Lucy Cooper' },
+      { roleCategory: 'MK_MoC', personName: 'Lorraine Shelby' },
+      { roleCategory: 'MH_SMoC', personName: 'Vicky Hancock' },
+      { roleCategory: 'Com_SMoC', personName: 'Mel Cahil' },
+      { roleCategory: 'DoC', personName: 'Sabrina Philips' }
     ]
   },
   {
-    id: 'period-4a',
+    id: 'period-10',
     startDate: '2026-07-31',
-    endDate: '2026-08-03',
+    endDate: '2026-08-04',
     displayStart: 'Fri 31/07/2026',
-    displayEnd: 'Mon 03/08/2026',
+    displayEnd: 'Tue 04/08/2026',
     assignments: [
-      { roleCategory: 'DoC_MentalHealth', personName: 'Gemma Brown', startDate: '31/07/2026', endDate: '03/08/2026' },
-      { roleCategory: 'DoC_Community', personName: 'Caroline Davies', startDate: '31/07/2026', endDate: '03/08/2026' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves', startDate: '31/07/2026', endDate: '03/08/2026' },
-      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
-      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+      { roleCategory: 'Ldn_SNoC', personName: 'Gemma Brown (31/07 - 03/08) / Kwame Boaitey (03/08 - 07/08)' },
+      { roleCategory: 'MK_MoC', personName: 'Caroline Davies (31/07 - 03/08) / Tsitsi Mlilo (03/08 - 07/08)' },
+      { roleCategory: 'MH_SMoC', personName: 'Nick Bygraves (31/07 - 03/08) / Oisagie Usideme (03/08 - 07/08)' },
+      { roleCategory: 'Com_SMoC', personName: 'Mel Cahil' },
+      { roleCategory: 'DoC', personName: 'Sabrina Philips' }
     ]
   },
   {
-    id: 'period-4b',
-    startDate: '2026-08-03',
+    id: 'period-11',
+    startDate: '2026-08-04',
     endDate: '2026-08-07',
-    displayStart: 'Mon 03/08/2026',
+    displayStart: 'Tue 04/08/2026',
     displayEnd: 'Fri 07/08/2026',
     assignments: [
-      { roleCategory: 'DoC_MentalHealth', personName: 'Kwame Boaitey', startDate: '03/08/2026', endDate: '07/08/2026' },
-      { roleCategory: 'DoC_Community', personName: 'Tsitsi Mlilo', startDate: '03/08/2026', endDate: '07/08/2026' },
-      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme', startDate: '03/08/2026', endDate: '07/08/2026' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
+      { roleCategory: 'MK_MoC', personName: 'Tsitsi Mlilo' },
+      { roleCategory: 'MH_SMoC', personName: 'Oisagie Usideme' },
+      { roleCategory: 'Com_SMoC', personName: 'Mel Cahil' },
+      { roleCategory: 'DoC', personName: 'Kim Cox' }
+    ]
+  },
+  {
+    id: 'period-12',
+    startDate: '2026-08-07',
+    endDate: '2026-08-11',
+    displayStart: 'Fri 07/08/2026',
+    displayEnd: 'Tue 11/08/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Kim Cox' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Kim Cox' },
+      { roleCategory: 'Com_SMoC', personName: 'Kim Cox' }
+    ]
+  },
+  {
+    id: 'period-13',
+    startDate: '2026-08-11',
+    endDate: '2026-08-14',
+    displayStart: 'Tue 11/08/2026',
+    displayEnd: 'Fri 14/08/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Doug Stewart' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Doug Stewart' },
+      { roleCategory: 'Com_SMoC', personName: 'Doug Stewart' }
+    ]
+  },
+  {
+    id: 'period-14',
+    startDate: '2026-08-14',
+    endDate: '2026-08-18',
+    displayStart: 'Fri 14/08/2026',
+    displayEnd: 'Tue 18/08/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Doug Stewart' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
       { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
-      { roleCategory: 'MH_SMoC', personName: 'Sabrina Philips' },
-      { roleCategory: 'Com_SMoC', personName: 'Sabrina Philips' }
+      { roleCategory: 'MH_SMoC', personName: 'Doug Stewart' },
+      { roleCategory: 'Com_SMoC', personName: 'Doug Stewart' }
+    ]
+  },
+  {
+    id: 'period-15',
+    startDate: '2026-08-18',
+    endDate: '2026-08-21',
+    displayStart: 'Tue 18/08/2026',
+    displayEnd: 'Fri 21/08/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Ryan Kemp' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Ryan Kemp' },
+      { roleCategory: 'Com_SMoC', personName: 'Ryan Kemp' }
+    ]
+  },
+  {
+    id: 'period-16',
+    startDate: '2026-08-21',
+    endDate: '2026-08-25',
+    displayStart: 'Fri 21/08/2026',
+    displayEnd: 'Tue 25/08/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Ryan Kemp' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Ryan Kemp' },
+      { roleCategory: 'Com_SMoC', personName: 'Ryan Kemp' }
+    ]
+  },
+  {
+    id: 'period-17',
+    startDate: '2026-08-25',
+    endDate: '2026-08-28',
+    displayStart: 'Tue 25/08/2026',
+    displayEnd: 'Fri 28/08/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'William Sakala' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'William Sakala' },
+      { roleCategory: 'Com_SMoC', personName: 'William Sakala' }
+    ]
+  },
+  {
+    id: 'period-18',
+    startDate: '2026-08-28',
+    endDate: '2026-09-01',
+    displayStart: 'Fri 28/08/2026',
+    displayEnd: 'Tue 01/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'William Sakala' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'William Sakala' },
+      { roleCategory: 'Com_SMoC', personName: 'William Sakala' }
+    ]
+  },
+  {
+    id: 'period-19',
+    startDate: '2026-09-01',
+    endDate: '2026-09-04',
+    displayStart: 'Tue 01/09/2026',
+    displayEnd: 'Fri 04/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Amanda Pithouse' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Amanda Pithouse' },
+      { roleCategory: 'Com_SMoC', personName: 'Amanda Pithouse' }
+    ]
+  },
+  {
+    id: 'period-20',
+    startDate: '2026-09-04',
+    endDate: '2026-09-08',
+    displayStart: 'Fri 04/09/2026',
+    displayEnd: 'Tue 08/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Amanda Pithouse' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Nick Bygraves' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Amanda Pithouse' },
+      { roleCategory: 'Com_SMoC', personName: 'Amanda Pithouse' }
+    ]
+  },
+  {
+    id: 'period-21',
+    startDate: '2026-09-08',
+    endDate: '2026-09-11',
+    displayStart: 'Tue 08/09/2026',
+    displayEnd: 'Fri 11/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Alison Butler' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Oisagie Usideme' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Alison Butler' },
+      { roleCategory: 'Com_SMoC', personName: 'Alison Butler' }
+    ]
+  },
+  {
+    id: 'period-22',
+    startDate: '2026-09-11',
+    endDate: '2026-09-15',
+    displayStart: 'Fri 11/09/2026',
+    displayEnd: 'Tue 15/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Alison Butler' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Marrietta Khorramdel' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Alison Butler' },
+      { roleCategory: 'Com_SMoC', personName: 'Alison Butler' }
+    ]
+  },
+  {
+    id: 'period-23',
+    startDate: '2026-09-15',
+    endDate: '2026-09-18',
+    displayStart: 'Tue 15/09/2026',
+    displayEnd: 'Fri 18/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Graeme Caul' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Sarah Farooq' },
+      { roleCategory: 'MK_MoC', personName: 'Mel Cahil' },
+      { roleCategory: 'MH_SMoC', personName: 'Graeme Caul' },
+      { roleCategory: 'Com_SMoC', personName: 'Graeme Caul' }
+    ]
+  },
+  {
+    id: 'period-24',
+    startDate: '2026-09-18',
+    endDate: '2026-09-22',
+    displayStart: 'Fri 18/09/2026',
+    displayEnd: 'Tue 22/09/2026',
+    assignments: [
+      { roleCategory: 'DoC', personName: 'Graeme Caul' },
+      { roleCategory: 'Ldn_SNoC', personName: 'Vicky Hancock' },
+      { roleCategory: 'MK_MoC', personName: 'Mary Smith' },
+      { roleCategory: 'MH_SMoC', personName: 'Graeme Caul' },
+      { roleCategory: 'Com_SMoC', personName: 'Graeme Caul' }
     ]
   }
 ];
@@ -162,7 +405,7 @@ export const PLAYBOOKS: EscalationPlaybook[] = [
       'Communications & Media Press Team On-Call',
       'Integrated Care Board (ICB) Gold Lead'
     ],
-    keyContacts: ['DoC_MentalHealth', 'DoC_Community', 'MH_SMoC'],
+    keyContacts: ['DoC', 'MH_SMoC'],
     cqcRequirement: 'Notifiable event if severe disruption or emergency evacuation occurs.'
   },
   {
@@ -181,7 +424,7 @@ export const PLAYBOOKS: EscalationPlaybook[] = [
       'NHS England Cyber Operations (CSOC / 0300 303 5222)',
       'Information Commissioner Office (ICO) within 72 hours if data breach'
     ],
-    keyContacts: ['DoC_MentalHealth', 'DoC_Community', 'Com_SMoC'],
+    keyContacts: ['DoC', 'Com_SMoC'],
     cqcRequirement: 'Report under CQC Regulation 18 if electronic patient record outage risks harm.'
   },
   {
@@ -200,7 +443,7 @@ export const PLAYBOOKS: EscalationPlaybook[] = [
       'CQC Notification via Portal within 24 hours',
       'Coroner Office & NHS Resolution'
     ],
-    keyContacts: ['Ldn_SNoC', 'DoC_MentalHealth', 'MH_SMoC'],
+    keyContacts: ['Ldn_SNoC', 'DoC', 'MH_SMoC'],
     cqcRequirement: 'Statutory Regulation 16/18 notification mandatory.'
   },
   {
@@ -219,7 +462,7 @@ export const PLAYBOOKS: EscalationPlaybook[] = [
       'London Ambulance Service / South Central Ambulance Service',
       'NHSE EPRR Regional Command'
     ],
-    keyContacts: ['DoC_MentalHealth', 'DoC_Community', 'Ldn_SNoC', 'MK_MoC'],
+    keyContacts: ['DoC', 'Ldn_SNoC', 'MK_MoC'],
     cqcRequirement: 'CQC Notification regarding change in service capacity or location.'
   },
   {
@@ -237,7 +480,7 @@ export const PLAYBOOKS: EscalationPlaybook[] = [
       'CNWL Head of Communications & Media Lead',
       'NHSE Communications On-Call'
     ],
-    keyContacts: ['DoC_MentalHealth', 'DoC_Community'],
+    keyContacts: ['DoC'],
     cqcRequirement: 'Inform Board Lead for Communications.'
   }
 ];

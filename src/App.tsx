@@ -17,6 +17,12 @@ export default function App() {
 
   const [showSecurityLock, setShowSecurityLock] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<TabType>('active');
+  const [directoryLevel, setDirectoryLevel] = useState<'GOLD' | 'SILVER' | 'INPATIENT'>('GOLD');
+
+  const handleNavigateToDirectory = (level: 'GOLD' | 'SILVER' | 'INPATIENT' = 'GOLD') => {
+    setDirectoryLevel(level);
+    setActiveTab('directories');
+  };
 
   // App Data
   const [roles, setRoles] = useState<OnCallRoleInfo[]>(DEDICATED_ROLES);
@@ -157,6 +163,7 @@ export default function App() {
             rotaPeriods={rotaPeriods}
             isAuthenticated={isAuthenticated}
             onRequestAuthenticate={() => setShowSecurityLock(true)}
+            onNavigateToDirectory={handleNavigateToDirectory}
           />
         )}
 
@@ -164,6 +171,7 @@ export default function App() {
           <DirectoriesTab
             isAuthenticated={isAuthenticated}
             onRequestAuthenticate={() => setShowSecurityLock(true)}
+            initialCommandLevel={directoryLevel}
           />
         )}
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoldContact, SilverContact } from '../types';
+import { INPATIENT_SITES_DATA, InpatientSite, InpatientContact } from '../data/inpatientSitesData';
 import { 
   subscribeGoldContacts, 
   subscribeSilverContacts, 
@@ -39,19 +40,29 @@ import {
   X,
   Sparkles,
   Award,
-  AlertCircle
+  AlertCircle,
+  Hospital,
+  Layers
 } from 'lucide-react';
 
 interface DirectoriesTabProps {
   isAuthenticated: boolean;
   onRequestAuthenticate: () => void;
+  initialCommandLevel?: 'GOLD' | 'SILVER' | 'INPATIENT';
 }
 
 export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
   isAuthenticated,
-  onRequestAuthenticate
+  onRequestAuthenticate,
+  initialCommandLevel = 'GOLD'
 }) => {
-  const [commandLevel, setCommandLevel] = useState<'GOLD' | 'SILVER'>('GOLD');
+  const [commandLevel, setCommandLevel] = useState<'GOLD' | 'SILVER' | 'INPATIENT'>(initialCommandLevel);
+
+  useEffect(() => {
+    if (initialCommandLevel) {
+      setCommandLevel(initialCommandLevel);
+    }
+  }, [initialCommandLevel]);
   const [goldContacts, setGoldContacts] = useState<GoldContact[]>([]);
   const [silverContacts, setSilverContacts] = useState<SilverContact[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -362,17 +373,38 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
     return 0; // preserve document order within category
   });
 
-  // Extract categories in document order
-  const categories: string[] = Array.from(new Set<string>(currentRawList.map(c => c.category))).sort((a: string, b: string) => {
-    if (commandLevel === 'GOLD') {
-      const idxA = GOLD_CATEGORY_ORDER.indexOf(a);
-      const idxB = GOLD_CATEGORY_ORDER.indexOf(b);
-      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-      if (idxA !== -1) return -1;
-      if (idxB !== -1) return 1;
-    }
-    return a.localeCompare(b);
+  // Filter Inpatient Sites
+  const filteredInpatientSites = INPATIENT_SITES_DATA.filter(site => {
+    const matchesSearch = 
+      site.siteName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      site.boroughCategory.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (site.address && site.address.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (site.serviceName && site.serviceName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (site.wards && site.wards.some(w => w.toLowerCase().includes(searchTerm.toLowerCase()))) ||
+      site.contacts.some(c => 
+        c.role.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        c.phone.includes(searchTerm) || 
+        (c.alternativePhone && c.alternativePhone.includes(searchTerm))
+      );
+
+    const matchesCategory = selectedCategory === 'ALL' || site.boroughCategory === selectedCategory;
+
+    return matchesSearch && matchesCategory;
   });
+
+  // Extract categories in document order
+  const categories: string[] = commandLevel === 'INPATIENT'
+    ? Array.from(new Set<string>(INPATIENT_SITES_DATA.map(s => s.boroughCategory)))
+    : Array.from(new Set<string>(currentRawList.map(c => c.category))).sort((a: string, b: string) => {
+        if (commandLevel === 'GOLD') {
+          const idxA = GOLD_CATEGORY_ORDER.indexOf(a);
+          const idxB = GOLD_CATEGORY_ORDER.indexOf(b);
+          if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+          if (idxA !== -1) return -1;
+          if (idxB !== -1) return 1;
+        }
+        return a.localeCompare(b);
+      });
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -385,33 +417,33 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
               FIREBASE FIRESTORE SYNC ACTIVE
             </span>
             <span className="text-xs text-slate-400 font-mono">
-              Live updates for Gold & Silver Command
+              Live updates for Emergency Directories & Inpatient Contacts
             </span>
           </div>
 
           <h2 className="text-base sm:text-lg font-bold text-slate-900">
-            Gold & Silver Command Emergency Directories
+            CNWL Trust Emergency & Inpatient Directories
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Upload, update, and access strategic Gold Command & tactical Silver Command key contact numbers
+            Access Director on-call list, Silver Command & Inpatient site ward contacts across all CNWL boroughs and services
           </p>
         </div>
 
         {/* Directory Command Level Toggle */}
-        <div className="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shrink-0">
+        <div className="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shrink-0 flex-wrap sm:flex-nowrap">
           <button
             onClick={() => {
               setCommandLevel('GOLD');
               setSelectedCategory('ALL');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 min-h-[40px] ${
+            className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 min-h-[40px] ${
               commandLevel === 'GOLD'
-                ? 'bg-amber-500 text-slate-950 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-emerald-100 text-emerald-950 border border-emerald-300 shadow-xs'
+                : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-50/60'
             }`}
           >
-            <ShieldAlert className="w-4 h-4" />
-            <span>Gold Command ({goldContacts.length})</span>
+            <ShieldAlert className="w-4 h-4 text-emerald-700" />
+            <span>Director on-call list ({goldContacts.length})</span>
           </button>
 
           <button
@@ -419,14 +451,29 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
               setCommandLevel('SILVER');
               setSelectedCategory('ALL');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 min-h-[40px] ${
+            className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 min-h-[40px] ${
               commandLevel === 'SILVER'
-                ? 'bg-slate-800 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-green-100 text-green-950 border border-green-300 shadow-xs'
+                : 'text-slate-600 hover:text-green-900 hover:bg-green-50/60'
             }`}
           >
-            <Users className="w-4 h-4" />
+            <Users className="w-4 h-4 text-green-700" />
             <span>Silver Command ({silverContacts.length})</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setCommandLevel('INPATIENT');
+              setSelectedCategory('ALL');
+            }}
+            className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 min-h-[40px] ${
+              commandLevel === 'INPATIENT'
+                ? 'bg-teal-100 text-teal-950 border border-teal-300 shadow-xs'
+                : 'text-slate-600 hover:text-teal-900 hover:bg-teal-50/60'
+            }`}
+          >
+            <Hospital className="w-4 h-4 text-teal-700" />
+            <span>Inpatient Sites ({INPATIENT_SITES_DATA.length})</span>
           </button>
         </div>
       </div>
@@ -439,7 +486,11 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder={`Search ${commandLevel} contacts by name, title, phone...`}
+              placeholder={
+                commandLevel === 'INPATIENT' 
+                  ? "Search sites, wards, bleepholders, matrons, phone numbers..." 
+                  : `Search ${commandLevel} contacts by name, title, phone...`
+              }
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors shadow-xs min-h-[44px]"
@@ -459,21 +510,25 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
               </button>
             )}
 
-            <button
-              onClick={() => setShowUploadModal(true)}
-              className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 border border-slate-200 transition-all min-h-[44px] shadow-xs"
-            >
-              <Upload className="w-4 h-4 text-slate-600" />
-              <span>Upload CSV / JSON</span>
-            </button>
+            {commandLevel !== 'INPATIENT' && (
+              <>
+                <button
+                  onClick={() => setShowUploadModal(true)}
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 border border-slate-200 transition-all min-h-[44px] shadow-xs"
+                >
+                  <Upload className="w-4 h-4 text-slate-600" />
+                  <span>Upload CSV / JSON</span>
+                </button>
 
-            <button
-              onClick={openAddModal}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all min-h-[44px] shadow-xs"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add {commandLevel} Contact</span>
-            </button>
+                <button
+                  onClick={openAddModal}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all min-h-[44px] shadow-xs"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add {commandLevel} Contact</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
 
@@ -481,7 +536,7 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">
-              Category:
+              {commandLevel === 'INPATIENT' ? 'Borough/Division:' : 'Category:'}
             </span>
             <button
               onClick={() => setSelectedCategory('ALL')}
@@ -491,7 +546,7 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              All ({currentRawList.length})
+              All ({commandLevel === 'INPATIENT' ? INPATIENT_SITES_DATA.length : currentRawList.length})
             </button>
             {categories.map((cat) => (
               <button
@@ -509,29 +564,156 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={handleExportJSON}
-              className="text-xs text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-1 px-2 py-1 rounded hover:bg-slate-50"
-              title="Export contacts as JSON backup file"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Export</span>
-            </button>
+            {commandLevel !== 'INPATIENT' && (
+              <>
+                <button
+                  onClick={handleExportJSON}
+                  className="text-xs text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-1 px-2 py-1 rounded hover:bg-slate-50"
+                  title="Export contacts as JSON backup file"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Export</span>
+                </button>
 
-            <button
-              onClick={handleResetDefaults}
-              className="text-xs text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-1 px-2 py-1 rounded hover:bg-slate-50"
-              title="Restore initial NHS default contacts"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Seed Defaults</span>
-            </button>
+                <button
+                  onClick={handleResetDefaults}
+                  className="text-xs text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-1 px-2 py-1 rounded hover:bg-slate-50"
+                  title="Restore initial NHS default contacts"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Seed Defaults</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
 
       {/* Directory Grid Display */}
-      {loading ? (
+      {commandLevel === 'INPATIENT' ? (
+        filteredInpatientSites.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 space-y-3">
+            <Hospital className="w-8 h-8 mx-auto text-slate-400" />
+            <h3 className="text-sm font-bold text-slate-800">No Inpatient Sites Found</h3>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+              No inpatient sites or wards matched "{searchTerm}". Try clearing your search or selecting a different borough filter.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredInpatientSites.map((site) => (
+              <div
+                key={site.id}
+                className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-all space-y-4"
+              >
+                <div className="space-y-3">
+                  {/* Borough / Division Header */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase border bg-blue-50 text-blue-800 border-blue-200 truncate">
+                      {site.boroughCategory}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      {site.contacts.length} Contact{site.contacts.length === 1 ? '' : 's'}
+                    </span>
+                  </div>
+
+                  {/* Site Title */}
+                  <div>
+                    <h3 className="text-sm font-extrabold text-slate-900 leading-snug flex items-center gap-1.5">
+                      <Hospital className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>{site.siteName}</span>
+                    </h3>
+                    {site.serviceName && (
+                      <p className="text-xs text-slate-600 font-medium mt-0.5">
+                        {site.serviceName}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Address */}
+                  {site.address && (
+                    <div className="flex items-start gap-1.5 text-xs text-slate-600">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
+                      <span className="leading-normal">{site.address}</span>
+                    </div>
+                  )}
+
+                  {/* Wards List */}
+                  {site.wards && site.wards.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                        <Layers className="w-3 h-3 text-slate-400" />
+                        <span>Wards & Units ({site.wards.length})</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {site.wards.map((ward, idx) => (
+                          <span
+                            key={idx}
+                            className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md border border-slate-200"
+                          >
+                            {ward}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Contacts List */}
+                  <div className="space-y-2 pt-2 border-t border-slate-100">
+                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      Site Contacts & Bleepholders
+                    </div>
+                    <div className="space-y-1.5">
+                      {site.contacts.map((c, idx) => (
+                        <div
+                          key={idx}
+                          className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs flex flex-col gap-1 hover:bg-slate-100/70 transition-colors"
+                        >
+                          <div className="font-semibold text-slate-800 leading-snug">
+                            {c.role}
+                          </div>
+                          <div className="flex items-center justify-between gap-2 pt-0.5">
+                            <a
+                              href={`tel:${c.phone.replace(/\s+/g, '')}`}
+                              className="font-mono font-bold text-blue-700 hover:underline flex items-center gap-1.5 text-xs"
+                            >
+                              <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                              <span>{c.phone}</span>
+                            </a>
+                            <button
+                              onClick={() => handleCopyPhone(c.phone, `${site.id}-${idx}`)}
+                              className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-white border border-slate-200/60 transition-colors min-w-[28px] min-h-[28px] flex items-center justify-center shrink-0"
+                              title="Copy telephone number"
+                            >
+                              {copiedId === `${site.id}-${idx}` ? (
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              ) : (
+                                <Copy className="w-3.5 h-3.5" />
+                              )}
+                            </button>
+                          </div>
+
+                          {c.alternativePhone && (
+                            <div className="text-[11px] text-slate-500 font-mono flex items-center gap-1 pl-5">
+                              <span>Alt:</span>
+                              <a
+                                href={`tel:${c.alternativePhone.replace(/\s+/g, '')}`}
+                                className="text-slate-700 hover:underline font-bold"
+                              >
+                                {c.alternativePhone}
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      ) : loading ? (
         <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 text-xs font-mono animate-pulse">
           <Database className="w-6 h-6 mx-auto mb-2 text-blue-500" />
           Synchronizing with Firebase Firestore {commandLevel} Directory...

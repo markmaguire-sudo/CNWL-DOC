@@ -9,7 +9,8 @@ import {
   ShieldCheck, 
   AlertTriangle,
   Lightbulb,
-  ChevronRight
+  ChevronRight,
+  ExternalLink
 } from 'lucide-react';
 
 interface AiAssistantTabProps {
@@ -113,6 +114,32 @@ How can I advise your Director on Call response today?`,
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* NHS SharePoint Copilot Bot Integration Card */}
+      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-2xl p-5 text-white shadow-md border border-blue-800/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1.5 max-w-2xl">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-200 border border-blue-400/30 text-[11px] font-semibold">
+            <Bot className="w-3.5 h-3.5 text-blue-300" />
+            NHS TRUST SHAREPOINT COPILOT
+          </div>
+          <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            Director On Call Advice Agent
+          </h3>
+          <p className="text-xs text-blue-100/80 leading-relaxed">
+            Access your organization's official NHS SharePoint Copilot bot directly for synchronized Trust policies and advice.
+          </p>
+        </div>
+        <a
+          href="https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-sm transition-all shrink-0 hover:shadow-md min-h-[44px]"
+        >
+          <Bot className="w-4 h-4" />
+          <span>Launch NHS Copilot Bot</span>
+          <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+        </a>
+      </div>
+
       {/* Header */}
       <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 text-slate-900 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

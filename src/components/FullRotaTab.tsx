@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { OnCallRoleInfo, RotaPeriod } from '../types';
+import { GroupedRotaTable } from './GroupedRotaTable';
 import { 
   Calendar, 
   Search, 
@@ -11,7 +12,9 @@ import {
   Download, 
   Edit3, 
   Filter,
-  X
+  X,
+  Table,
+  LayoutGrid
 } from 'lucide-react';
 
 interface FullRotaTabProps {
@@ -33,13 +36,13 @@ export const FullRotaTab: React.FC<FullRotaTabProps> = ({
   const [selectedPeriodId, setSelectedPeriodId] = useState<string>('all');
   const [editingPeriod, setEditingPeriod] = useState<RotaPeriod | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [viewMode, setViewMode] = useState<'TABLE' | 'CARDS'>('TABLE');
 
   // New shift form state
   const [newStart, setNewStart] = useState('');
   const [newEnd, setNewEnd] = useState('');
   const [newAssignments, setNewAssignments] = useState<Record<string, string>>({
-    DoC_MentalHealth: '',
-    DoC_Community: '',
+    DoC: '',
     Ldn_SNoC: '',
     MK_MoC: '',
     MH_SMoC: '',
@@ -125,10 +128,36 @@ export const FullRotaTab: React.FC<FullRotaTabProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button
+              onClick={() => setViewMode('TABLE')}
+              className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 min-h-[38px] ${
+                viewMode === 'TABLE'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Table className="w-3.5 h-3.5" />
+              <span>Grouped Rota Table</span>
+            </button>
+
+            <button
+              onClick={() => setViewMode('CARDS')}
+              className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 min-h-[38px] ${
+                viewMode === 'CARDS'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              <span>Period Cards</span>
+            </button>
+          </div>
+
           <button
             onClick={handleExportCSV}
-            className="flex-1 sm:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors min-h-[44px]"
+            className="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors min-h-[44px]"
           >
             <Download className="w-4 h-4 text-slate-500" />
             <span>Export CSV</span>
@@ -136,7 +165,7 @@ export const FullRotaTab: React.FC<FullRotaTabProps> = ({
 
           <button
             onClick={() => isAuthenticated ? setShowAddModal(true) : onRequestAuthenticate()}
-            className="flex-1 sm:flex-initial bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all min-h-[44px]"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all min-h-[44px]"
           >
             <Plus className="w-4 h-4" />
             <span>Add Rota Period</span>
@@ -147,10 +176,10 @@ export const FullRotaTab: React.FC<FullRotaTabProps> = ({
       {/* Filter & Search Bar */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="relative md:col-span-2">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Search officer name (e.g. Mark Maguire, Lucy Cooper, Gemma Brown)..."
+            placeholder="Search officer name (e.g. Mark Maguire, Lucy Cooper, Gemma Brown, Luis Gracia)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors shadow-xs min-h-[44px]"
@@ -174,10 +203,19 @@ export const FullRotaTab: React.FC<FullRotaTabProps> = ({
         </div>
       </div>
 
-      {/* Period Cards / Matrix */}
+      {/* Main Rota Content */}
+      {viewMode === 'TABLE' ? (
+        <GroupedRotaTable
+          roles={roles}
+          rotaPeriods={filteredPeriods}
+          isAuthenticated={isAuthenticated}
+          searchTerm={searchTerm}
+        />
+      ) : (
       <div className="space-y-4 sm:space-y-6">
         {filteredPeriods.map((period) => {
-          const isCurrentActive = period.id === 'period-4a';
+          const todayStr = new Date().toISOString().slice(0, 10);
+          const isCurrentActive = period.startDate <= todayStr && period.endDate >= todayStr;
 
           return (
             <div
@@ -331,6 +369,7 @@ export const FullRotaTab: React.FC<FullRotaTabProps> = ({
           );
         })}
       </div>
+      )}
 
       {/* Add Shift Modal */}
       {showAddModal && (

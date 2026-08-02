@@ -1,10 +1,11 @@
 export type RoleCategory = 
-  | 'DoC_MentalHealth' 
-  | 'DoC_Community' 
+  | 'DoC'
   | 'Ldn_SNoC' 
   | 'MK_MoC' 
   | 'MH_SMoC' 
-  | 'Com_SMoC';
+  | 'Com_SMoC'
+  | 'DoC_MentalHealth'
+  | 'DoC_Community';
 
 export interface OnCallRoleInfo {
   id: RoleCategory;
@@ -13,6 +14,7 @@ export interface OnCallRoleInfo {
   phone: string;
   description: string;
   color: string;
+  group: 'Mental Health' | 'Community' | 'Director on Call';
 }
 
 export interface RotaPersonRole {

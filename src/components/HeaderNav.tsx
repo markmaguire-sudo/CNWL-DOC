@@ -8,7 +8,8 @@ import {
   Lock, 
   ShieldCheck,
   Clock,
-  Users
+  Users,
+  ExternalLink
 } from 'lucide-react';
 
 export type TabType = 'active' | 'directories' | 'full' | 'incidents' | 'protocols' | 'ai';
@@ -53,7 +54,19 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <span className="bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium hidden sm:inline-block">
+            <a
+              href="https://nhs.sharepoint.com/:u:/r/sites/RV3_NDEPRR/Data/Director%20On%20Call%20Folder/Director%20On%20Call%20Advice.agent?d=w75d069ef117b4649871a6c841b42dedf&csf=1&web=1&e=1nvVNr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-blue-600 hover:bg-blue-500 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition-colors shadow-xs"
+              title="Launch NHS SharePoint Copilot Bot"
+            >
+              <Bot className="w-3 h-3" />
+              <span>NHS Copilot Bot</span>
+              <ExternalLink className="w-2.5 h-2.5 opacity-80" />
+            </a>
+
+            <span className="bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium hidden md:inline-block">
               EPRR Directory
             </span>
 
@@ -132,7 +145,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
             }`}
           >
             <Users className="w-3.5 h-3.5" />
-            <span>Gold & Silver Directories</span>
+            <span>Director on-call & Silver Directories</span>
           </button>
 
           <button
