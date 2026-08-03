@@ -60,15 +60,6 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
               <span>NHS Copilot Bot</span>
               <ExternalLink className="w-2.5 h-2.5 opacity-80" />
             </a>
-
-            <span className="bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium hidden md:inline-block">
-              EPRR Directory
-            </span>
-
-            <span className="bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 px-2.5 py-1 rounded-lg flex items-center gap-1.5 text-xs font-semibold">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Direct Access Unlocked</span>
-            </span>
           </div>
         </div>
 

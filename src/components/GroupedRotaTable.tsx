@@ -10,6 +10,21 @@ interface GroupedRotaTableProps {
   highlightCurrentPeriodOnly?: boolean;
 }
 
+function formatPhoneDisplay(phone: string): string {
+  if (!phone) return '';
+  const digits = phone.replace(/\D/g, '');
+  if (digits.startsWith('0800')) {
+    let cleanDigits = digits;
+    if (cleanDigits.length === 11 && cleanDigits[4] === '0') {
+      cleanDigits = cleanDigits.slice(0, 4) + cleanDigits.slice(5);
+    }
+    if (cleanDigits.length >= 10) {
+      return `0800 ${cleanDigits.slice(4, 7)} ${cleanDigits.slice(7, 10)}`;
+    }
+  }
+  return phone;
+}
+
 export const GroupedRotaTable: React.FC<GroupedRotaTableProps> = ({
   roles,
   rotaPeriods,
@@ -22,7 +37,7 @@ export const GroupedRotaTable: React.FC<GroupedRotaTableProps> = ({
   // Helper to find phone number for a role
   const getRolePhone = (roleId: string) => {
     const r = roles.find((item) => item.id === roleId);
-    return r ? r.phone : '';
+    return r ? formatPhoneDisplay(r.phone) : '';
   };
 
   // Filter periods by search term

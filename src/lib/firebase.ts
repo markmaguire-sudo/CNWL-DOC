@@ -86,14 +86,28 @@ export function subscribeGoldContacts(callback: (contacts: GoldContact[]) => voi
   return onSnapshot(goldCol, (snapshot) => {
     const rawList: GoldContact[] = snapshot.docs.map((d) => {
       const data = d.data();
+      let phone = data.phone || '';
+      let alternativePhone = data.alternativePhone || '';
+
+      const cleanPhone = phone.trim().replace(/^[\s\(\)]+/, '');
+      const cleanAlt = alternativePhone.trim().replace(/^[\s\(\)]+/, '');
+      if ((cleanPhone.startsWith('01') || cleanPhone.startsWith('02')) && cleanAlt && !cleanAlt.startsWith('01') && !cleanAlt.startsWith('02')) {
+        const temp = phone;
+        phone = alternativePhone;
+        alternativePhone = temp;
+      }
+
+      phone = phone.replace(/\s+/g, '');
+      alternativePhone = alternativePhone.replace(/\s+/g, '');
+
       return {
         id: d.id,
         name: data.name || '',
         title: data.title || '',
         category: data.category === 'Executive Board' ? 'Executive' : (data.category || 'Executive'),
         commandLevel: 'GOLD',
-        phone: data.phone || '',
-        alternativePhone: data.alternativePhone || '',
+        phone,
+        alternativePhone,
         email: data.email || '',
         organization: data.organization || 'CNWL NHS Foundation Trust',
         notes: data.notes || '',
@@ -124,14 +138,28 @@ export function subscribeSilverContacts(callback: (contacts: SilverContact[]) =>
   return onSnapshot(silverCol, (snapshot) => {
     const list: SilverContact[] = snapshot.docs.map((d) => {
       const data = d.data();
+      let phone = data.phone || '';
+      let alternativePhone = data.alternativePhone || '';
+
+      const cleanPhone = phone.trim().replace(/^[\s\(\)]+/, '');
+      const cleanAlt = alternativePhone.trim().replace(/^[\s\(\)]+/, '');
+      if ((cleanPhone.startsWith('01') || cleanPhone.startsWith('02')) && cleanAlt && !cleanAlt.startsWith('01') && !cleanAlt.startsWith('02')) {
+        const temp = phone;
+        phone = alternativePhone;
+        alternativePhone = temp;
+      }
+
+      phone = phone.replace(/\s+/g, '');
+      alternativePhone = alternativePhone.replace(/\s+/g, '');
+
       return {
         id: d.id,
         name: data.name || '',
         title: data.title || '',
         category: data.category || 'Operational Leads',
         commandLevel: 'SILVER',
-        phone: data.phone || '',
-        alternativePhone: data.alternativePhone || '',
+        phone,
+        alternativePhone,
         email: data.email || '',
         siteLocation: data.siteLocation || 'Trust Sites',
         notes: data.notes || '',
@@ -256,8 +284,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Chief Executive',
     category: 'Executive',
     commandLevel: 'GOLD',
-    phone: '020 3214 5751',
-    alternativePhone: '07971 082 972',
+    phone: '07971 082 972',
+    alternativePhone: '020 3214 5751',
     email: 'claire.murdoch@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Chief Executive'
@@ -267,8 +295,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Chief Medical Officer',
     category: 'Executive',
     commandLevel: 'GOLD',
-    phone: '0203 214 5885',
-    alternativePhone: '07970 977 831',
+    phone: '07970 977 831',
+    alternativePhone: '0203 214 5885',
     email: 'cornelius.kelly@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Chief Medical Officer'
@@ -278,8 +306,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Chief Operating Officer',
     category: 'Executive',
     commandLevel: 'GOLD',
-    phone: '0207 685 5806',
-    alternativePhone: '07808 067 693',
+    phone: '07808 067 693',
+    alternativePhone: '0207 685 5806',
     email: 'graeme.caul@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Chief Operating Officer'
@@ -300,8 +328,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Exec Director of Partnerships and Commercial Development | SIRO',
     category: 'Executive',
     commandLevel: 'GOLD',
-    phone: '020 3214 5893',
-    alternativePhone: '07974353857',
+    phone: '07974 353 857',
+    alternativePhone: '020 3214 5893',
     email: 'ross.graves@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Senior Information Risk Owner (SIRO)'
@@ -311,8 +339,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Chief Finance Officer',
     category: 'Executive',
     commandLevel: 'GOLD',
-    phone: '0203 214 5723',
-    alternativePhone: '07787422563',
+    phone: '07787 422 563',
+    alternativePhone: '0203 214 5723',
     email: 'tom.shearer1@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Chief Finance Officer'
@@ -322,8 +350,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Chief People Officer',
     category: 'Executive',
     commandLevel: 'GOLD',
-    phone: '0203 317 3463',
-    alternativePhone: '07801946076',
+    phone: '07801 946 076',
+    alternativePhone: '0203 317 3463',
     email: 'nick.green9@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Chief People Officer'
@@ -346,8 +374,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Director of Nursing- Diggory',
     category: 'Divisions',
     commandLevel: 'GOLD',
-    phone: '02085 157 830',
-    alternativePhone: '07740 514 433',
+    phone: '07740 514 433',
+    alternativePhone: '02085 157 830',
     email: 'james.smith22@nhs.net',
     organization: 'CNWL Diggory Division',
     notes: 'Director of Nursing - Diggory'
@@ -357,8 +385,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Divisional Managing Director',
     category: 'Divisions',
     commandLevel: 'GOLD',
-    phone: '01895 484795',
-    alternativePhone: '07545649700',
+    phone: '07545649700',
+    alternativePhone: '01895 484795',
     email: 'v.odlin@nhs.net',
     organization: 'CNWL NHS Foundation Trust',
     notes: 'Divisional Managing Director'
@@ -391,7 +419,7 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     category: 'Divisions',
     commandLevel: 'GOLD',
     phone: '07790 324 261',
-    alternativePhone: '07790 324 261',
+    alternativePhone: '',
     email: 'kcox@nhs.net',
     organization: 'CNWL Jameson Division',
     notes: 'Director of Nursing - Jameson'
@@ -416,8 +444,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Managing Director, QTS',
     category: 'QTS',
     commandLevel: 'GOLD',
-    phone: '020 3214 5850',
-    alternativePhone: '07814750139',
+    phone: '07814750139',
+    alternativePhone: '020 3214 5850',
     email: 'gillian.stafford@nhs.net',
     organization: 'CNWL Quality Transformation Services',
     notes: 'Managing Director, QTS'
@@ -427,8 +455,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'QTS Operations Director',
     category: 'QTS',
     commandLevel: 'GOLD',
-    phone: '020 3214 3426',
-    alternativePhone: '07980 891 015',
+    phone: '07980 891 015',
+    alternativePhone: '020 3214 3426',
     email: 'hannah.obrien2@nhs.net',
     organization: 'CNWL Quality Transformation Services',
     notes: 'QTS Operations Director'
@@ -440,8 +468,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Chief Pharmacist',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '020 3317 3489',
-    alternativePhone: '07834 416 915',
+    phone: '07834 416 915',
+    alternativePhone: '020 3317 3489',
     email: 'tf.chan@nhs.net',
     organization: 'CNWL Pharmacy Services',
     notes: 'Chief Pharmacist'
@@ -451,8 +479,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Director of Quality',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '020 3214 5767',
-    alternativePhone: '07796 484 632',
+    phone: '07796 484 632',
+    alternativePhone: '020 3214 5767',
     email: 'catherine.knights@nhs.net',
     organization: 'CNWL Quality Directorate',
     notes: 'Director of Quality'
@@ -463,7 +491,7 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     category: 'DoC',
     commandLevel: 'GOLD',
     phone: '07754 949 994',
-    alternativePhone: '07754 949 994',
+    alternativePhone: '',
     email: 'ryan.kemp@nhs.net',
     organization: 'CNWL Therapies Directorate',
     notes: 'Director of Therapies'
@@ -473,8 +501,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Associate Director of Information and Business Intelligence',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '0203 214 5981',
-    alternativePhone: '07932 695 236',
+    phone: '07932 695 236',
+    alternativePhone: '0203 214 5981',
     email: 'tracy.white2@nhs.net',
     organization: 'CNWL Business Intelligence',
     notes: 'Associate Director of Information & BI'
@@ -484,8 +512,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Deputy Chief Finance Officer',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '020 3214 5791',
-    alternativePhone: '07974 150 824',
+    phone: '07974 150 824',
+    alternativePhone: '020 3214 5791',
     email: 'cynthiafernandez@nhs.net',
     organization: 'CNWL Finance Directorate',
     notes: 'Deputy Chief Finance Officer'
@@ -495,8 +523,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Director of Improvement',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '020 3214 5868',
-    alternativePhone: '07711 015 081',
+    phone: '07711 015 081',
+    alternativePhone: '020 3214 5868',
     email: 'alisonbutler@nhs.net',
     organization: 'CNWL Improvement Directorate',
     notes: 'Director of Improvement'
@@ -506,8 +534,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'ICT (Infrastructure) Director',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '020 3214 5330',
-    alternativePhone: '07824 630870',
+    phone: '07824 630870',
+    alternativePhone: '020 3214 5330',
     email: 'owenpowell1@nhs.net',
     organization: 'CNWL ICT Directorate',
     notes: 'ICT Infrastructure Lead'
@@ -528,8 +556,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Assistant Director of Safety',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '0203 214 5757',
-    alternativePhone: '0789 987 0651',
+    phone: '0789 987 0651',
+    alternativePhone: '0203 214 5757',
     email: 'Jack.pooler@nhs.net',
     organization: 'CNWL Patient Safety',
     notes: 'Assistant Director of Safety'
@@ -539,8 +567,8 @@ export const SEED_GOLD_CONTACTS: Omit<GoldContact, 'id'>[] = [
     title: 'Emergency Planning and Business Continuity Manager',
     category: 'DoC',
     commandLevel: 'GOLD',
-    phone: '0207 504 5137',
-    alternativePhone: '07969 640 846',
+    phone: '07969 640 846',
+    alternativePhone: '0207 504 5137',
     email: 'surriya.subramaniam@nhs.net',
     organization: 'CNWL EPRR Team',
     notes: 'Emergency Planning & Business Continuity Lead'
@@ -577,7 +605,7 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     category: 'Operational Leads',
     commandLevel: 'SILVER',
     phone: '07740 514 459',
-    alternativePhone: '0800 090 2464',
+    alternativePhone: '0800 902 464',
     email: 'ops.mh@nhs.net',
     siteLocation: 'St Charles & Park Royal Wards',
     notes: 'Silver Command Tactical Chair - MH Inpatients'
@@ -588,7 +616,7 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     category: 'Operational Leads',
     commandLevel: 'SILVER',
     phone: '07812 345 678',
-    alternativePhone: '0800 090 2465',
+    alternativePhone: '0800 902 465',
     email: 'ops.community@nhs.net',
     siteLocation: 'London & Milton Keynes Community Sites',
     notes: 'Silver Command Lead - Physical Health & District Nursing'
@@ -598,8 +626,8 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     title: 'Operational Director - Brent & Harrow Services',
     category: 'Borough Commanders',
     commandLevel: 'SILVER',
-    phone: '020 8869 2000',
-    alternativePhone: '07900 123 999',
+    phone: '07900 123 999',
+    alternativePhone: '020 8869 2000',
     email: 'brent.harrow.ops@nhs.net',
     siteLocation: 'Harrow Mental Health Centre',
     notes: 'Local Borough Tactical Response Manager'
@@ -609,8 +637,8 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     title: 'Operational Director - Kensington, Chelsea & Westminster',
     category: 'Borough Commanders',
     commandLevel: 'SILVER',
-    phone: '020 7380 9200',
-    alternativePhone: '07911 234 888',
+    phone: '07911 234 888',
+    alternativePhone: '020 7380 9200',
     email: 'kcw.ops@nhs.net',
     siteLocation: 'South Kensington HQ & St Charles',
     notes: 'Central London Ward Escalation Commander'
@@ -620,7 +648,7 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     title: 'Director of Facilities & Estates Infrastructure',
     category: 'Estates & Facilities',
     commandLevel: 'SILVER',
-    phone: '0800 090 2468',
+    phone: '0800 902 468',
     alternativePhone: '07700 443 322',
     email: 'estates.emergency@nhs.net',
     siteLocation: 'Trust-wide Facilities',
@@ -631,8 +659,8 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     title: 'CISO / Head of IT Incident Response',
     category: 'IT & Cyber On-Call',
     commandLevel: 'SILVER',
-    phone: '020 7380 9999',
-    alternativePhone: '07888 777 666',
+    phone: '07888 777 666',
+    alternativePhone: '020 7380 9999',
     email: 'cyber.incident@nhs.net',
     siteLocation: 'IT Operations Bureau',
     notes: 'Ransomware Isolation, EPR Outage & BCP Activation'
@@ -642,7 +670,7 @@ export const SEED_SILVER_CONTACTS: Omit<SilverContact, 'id'>[] = [
     title: 'Inpatient Bed Management & Duty Senior Nurse',
     category: 'Clinical Leads',
     commandLevel: 'SILVER',
-    phone: '0800 090 2467',
+    phone: '0800 902 467',
     alternativePhone: '07700 889 900',
     email: 'snoc.london@nhs.net',
     siteLocation: 'London Bed Management Hub',

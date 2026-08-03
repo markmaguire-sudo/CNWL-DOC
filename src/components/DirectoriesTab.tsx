@@ -46,6 +46,21 @@ import {
   Layers
 } from 'lucide-react';
 
+function formatPhoneDisplay(phone: string): string {
+  if (!phone) return '';
+  const digits = phone.replace(/\D/g, '');
+  if (digits.startsWith('0800')) {
+    let cleanDigits = digits;
+    if (cleanDigits.length === 11 && cleanDigits[4] === '0') {
+      cleanDigits = cleanDigits.slice(0, 4) + cleanDigits.slice(5);
+    }
+    if (cleanDigits.length >= 10) {
+      return `0800 ${cleanDigits.slice(4, 7)} ${cleanDigits.slice(7, 10)}`;
+    }
+  }
+  return phone;
+}
+
 interface DirectoriesTabProps {
   isAuthenticated: boolean;
   onRequestAuthenticate: () => void;
@@ -786,48 +801,34 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
                   </p>
                 </div>
 
-                {/* Organization / Site Location */}
-                <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-                  {contact.commandLevel === 'GOLD' ? (
-                    <>
-                      <Building className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span className="truncate">{(contact as GoldContact).organization}</span>
-                    </>
-                  ) : (
-                    <>
-                      <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span className="truncate">{(contact as SilverContact).siteLocation || 'Trust Sites'}</span>
-                    </>
-                  )}
-                </div>
-
-                {/* Phone Numbers */}
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <a href={`tel:${contact.phone}`} className="font-mono font-bold text-slate-900 hover:text-emerald-700">
-                        {contact.phone}
-                      </a>
-                    </div>
-                    <a
-                      href={`sms:${contact.phone.replace(/\s+/g, '')}`}
-                      className="text-[10px] text-slate-600 hover:text-emerald-700 font-mono font-medium flex items-center gap-1 bg-white hover:bg-emerald-50 px-2 py-0.5 rounded-md border border-slate-200/80 transition-colors"
-                      title={`Text ${contact.phone}`}
-                    >
-                      <MessageSquare className="w-3 h-3 text-slate-600" />
-                      <span>Text</span>
-                    </a>
+                {/* Site Location (Silver contacts) */}
+                {contact.commandLevel !== 'GOLD' && (contact as SilverContact).siteLocation && (
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                    <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span className="truncate">{(contact as SilverContact).siteLocation}</span>
                   </div>
+                )}
 
-                  {contact.alternativePhone && (
-                    <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[11px]">
-                      <span className="text-slate-500 font-mono">Alt Phone:</span>
-                      <a href={`tel:${contact.alternativePhone}`} className="font-mono text-slate-700 font-semibold hover:text-emerald-700">
-                        {contact.alternativePhone}
-                      </a>
-                    </div>
-                  )}
+                {/* Phone Numbers & Text Action */}
+                <div className="flex items-center gap-2 text-xs pt-1">
+                  {/* Phone number in a green box */}
+                  <a
+                    href={`tel:${formatPhoneDisplay(contact.phone).replace(/\s+/g, '')}`}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-mono font-extrabold px-3 py-2 rounded-xl shadow-xs transition-all text-xs"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-white shrink-0" />
+                    <span>{formatPhoneDisplay(contact.phone)}</span>
+                  </a>
+
+                  {/* Text button in a white box on the same line */}
+                  <a
+                    href={`sms:${formatPhoneDisplay(contact.phone).replace(/\s+/g, '')}`}
+                    className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 border border-slate-200 font-mono font-bold px-3 py-2 rounded-xl shadow-xs transition-all text-xs shrink-0"
+                    title={`Text ${contact.phone}`}
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+                    <span>Text</span>
+                  </a>
                 </div>
 
                 {/* Email */}
@@ -937,29 +938,16 @@ export const DirectoriesTab: React.FC<DirectoriesTabProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Primary Direct Phone *</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 020 7380 9000"
-                    value={formPhone}
-                    onChange={(e) => setFormPhone(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 font-mono font-bold focus:outline-none focus:border-blue-500"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Alternative Phone</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 07800 123 456"
-                    value={formAltPhone}
-                    onChange={(e) => setFormAltPhone(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 font-mono focus:outline-none focus:border-blue-500"
-                  />
-                </div>
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Primary Direct Phone *</label>
+                <input
+                  type="text"
+                  placeholder="e.g. 07800 123 456"
+                  value={formPhone}
+                  onChange={(e) => setFormPhone(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 font-mono font-bold focus:outline-none focus:border-blue-500"
+                  required
+                />
               </div>
 
               <div>

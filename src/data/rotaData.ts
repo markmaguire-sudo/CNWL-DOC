@@ -5,7 +5,7 @@ export const DEDICATED_ROLES: OnCallRoleInfo[] = [
     id: 'Ldn_SNoC',
     title: 'Senior Nurse for CNWL London',
     shortCode: 'Ldn-SNoC',
-    phone: '0800 090 2464',
+    phone: '0800 902 464',
     description: 'Senior Clinical Nursing Lead for CNWL London Units & Inpatient Bed Management',
     color: 'bg-blue-600 text-white',
     group: 'Mental Health'
@@ -14,7 +14,7 @@ export const DEDICATED_ROLES: OnCallRoleInfo[] = [
     id: 'MK_MoC',
     title: 'Manager for CNWL Milton Keynes',
     shortCode: 'MK-MoC',
-    phone: '0800 090 2465',
+    phone: '0800 902 465',
     description: 'Operational Manager Lead for Milton Keynes Community & Mental Health Services',
     color: 'bg-rose-600 text-white',
     group: 'Mental Health'
@@ -23,7 +23,7 @@ export const DEDICATED_ROLES: OnCallRoleInfo[] = [
     id: 'MH_SMoC',
     title: 'Senior Manager - Mental Health',
     shortCode: 'MH-SMoC',
-    phone: '0800 090 2467',
+    phone: '0800 902 467',
     description: 'Senior Operational Manager for Mental Health Acute & Crisis Teams',
     color: 'bg-amber-600 text-white',
     group: 'Mental Health'
@@ -32,7 +32,7 @@ export const DEDICATED_ROLES: OnCallRoleInfo[] = [
     id: 'Com_SMoC',
     title: 'Senior Manager - Community',
     shortCode: 'Com-SMoC',
-    phone: '0800 090 2466',
+    phone: '0800 902 466',
     description: 'Senior Operational Manager for Community Services & Urgent Care Pathways',
     color: 'bg-sky-600 text-white',
     group: 'Community'

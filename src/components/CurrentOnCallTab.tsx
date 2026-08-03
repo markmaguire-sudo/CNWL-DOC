@@ -21,6 +21,21 @@ interface CurrentOnCallTabProps {
   onNavigateToDirectory?: (level: 'GOLD' | 'SILVER' | 'INPATIENT') => void;
 }
 
+function formatPhoneDisplay(phone: string): string {
+  if (!phone) return '';
+  const digits = phone.replace(/\D/g, '');
+  if (digits.startsWith('0800')) {
+    let cleanDigits = digits;
+    if (cleanDigits.length === 11 && cleanDigits[4] === '0') {
+      cleanDigits = cleanDigits.slice(0, 4) + cleanDigits.slice(5);
+    }
+    if (cleanDigits.length >= 10) {
+      return `0800 ${cleanDigits.slice(4, 7)} ${cleanDigits.slice(7, 10)}`;
+    }
+  }
+  return phone;
+}
+
 export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
   roles,
   rotaPeriods,
@@ -59,22 +74,16 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
   const communityRoles = filteredRoles.filter(r => r.group === 'Community' || r.id === 'Com_SMoC');
 
   const renderRoleCard = (role: OnCallRoleInfo) => {
-    const isCopied = copiedRole === role.id;
-
     return (
       <div
         key={role.id}
-        className="bg-white border border-slate-200 hover:border-slate-300 rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col justify-between shadow-xs transition-all hover:shadow-md relative overflow-hidden group h-full min-w-0"
+        className="bg-white border border-slate-200 hover:border-slate-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 flex flex-col justify-between shadow-xs transition-all hover:shadow-md relative overflow-hidden group h-full min-w-0"
       >
         <div className="space-y-1.5 sm:space-y-3 min-w-0">
-          {/* Role Tag & Badge */}
+          {/* Role Tag */}
           <div className="flex items-center justify-between gap-1 flex-wrap sm:flex-nowrap">
             <span className={`text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md tracking-wide shrink-0 ${role.color}`}>
               {role.shortCode}
-            </span>
-            <span className="text-[9px] sm:text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 sm:px-2 py-0.5 rounded font-mono font-semibold flex items-center gap-1 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span>Cover Active</span>
             </span>
           </div>
 
@@ -87,37 +96,28 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
               {role.description}
             </p>
           </div>
-
-          {/* Dedicated Phone Line Display */}
-          <div className="bg-slate-50 rounded-lg sm:rounded-xl p-1.5 sm:p-3 border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-0.5 sm:gap-2 font-mono text-[10px] sm:text-xs">
-            <span className="text-slate-500 text-[9px] sm:text-[11px] font-sans font-semibold">Direct Line:</span>
-            <a
-              href={`tel:${role.phone.replace(/\s+/g, '')}`}
-              className="font-extrabold text-emerald-700 text-[11px] sm:text-base tracking-tight sm:tracking-wide hover:underline truncate w-full sm:w-auto"
-            >
-              {role.phone}
-            </a>
-          </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="pt-2 sm:pt-4 mt-2 sm:mt-3 border-t border-slate-100 flex items-center gap-1 sm:gap-2">
+        {/* Phone Box & Text Box on the same line */}
+        <div className="pt-2.5 sm:pt-4 mt-2 sm:mt-3 border-t border-slate-100 flex items-center gap-1.5 sm:gap-2">
+          {/* Phone number in a green box */}
           <a
-            href={`tel:${role.phone.replace(/\s+/g, '')}`}
-            className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 sm:py-2.5 px-1 sm:px-3 rounded-lg sm:rounded-xl text-[10px] sm:text-xs flex items-center justify-center gap-1 transition-colors shadow-xs min-h-[34px] sm:min-h-[44px]"
+            href={`tel:${formatPhoneDisplay(role.phone).replace(/\s+/g, '')}`}
+            className="flex-1 inline-flex items-center justify-center gap-1 sm:gap-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-mono font-extrabold px-1.5 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow-xs transition-all text-[10px] sm:text-xs min-h-[34px] sm:min-h-[40px] truncate"
             title={`Call ${role.title}`}
           >
-            <Phone className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-            <span className="text-[10px] sm:text-xs">Call</span>
+            <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white shrink-0" />
+            <span className="truncate">{formatPhoneDisplay(role.phone)}</span>
           </a>
 
+          {/* Text button in a white box on the same line */}
           <a
-            href={`sms:${role.phone.replace(/\s+/g, '')}`}
-            className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold p-1 sm:p-2.5 rounded-lg sm:rounded-xl text-xs flex items-center justify-center gap-1 transition-colors min-h-[34px] sm:min-h-[44px] shrink-0"
+            href={`sms:${formatPhoneDisplay(role.phone).replace(/\s+/g, '')}`}
+            className="inline-flex items-center justify-center gap-1 sm:gap-1.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 border border-slate-200 font-mono font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow-xs transition-all text-[10px] sm:text-xs shrink-0 min-h-[34px] sm:min-h-[40px]"
             title={`SMS ${role.title}`}
           >
-            <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span className="text-[10px] sm:text-xs">SMS Text</span>
+            <MessageSquare className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-600 shrink-0" />
+            <span>Text</span>
           </a>
         </div>
       </div>
@@ -141,14 +141,21 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
               <span>Shift Window: <strong className="text-slate-900 font-mono">{currentPeriod.displayStart}</strong> to <strong className="text-slate-900 font-mono">{currentPeriod.displayEnd}</strong></span>
             </p>
             {docRole && (
-              <div className="mt-3 flex items-center gap-2 pt-2.5 border-t border-slate-100">
-                <span className="text-xs text-slate-500 font-semibold">DoC Direct Line:</span>
+              <div className="mt-3 flex items-center gap-2 pt-2.5 border-t border-slate-100 flex-wrap sm:flex-nowrap">
                 <a
-                  href={`tel:${docRole.phone.replace(/\s+/g, '')}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-xs shadow-xs transition-all cursor-pointer min-h-[36px]"
+                  href={`tel:${formatPhoneDisplay(docRole.phone).replace(/\s+/g, '')}`}
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-mono font-extrabold text-xs shadow-xs transition-all cursor-pointer min-h-[36px]"
                 >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span>Call {docRole.phone}</span>
+                  <Phone className="w-3.5 h-3.5 text-white shrink-0" />
+                  <span>{formatPhoneDisplay(docRole.phone)}</span>
+                </a>
+                <a
+                  href={`sms:${formatPhoneDisplay(docRole.phone).replace(/\s+/g, '')}`}
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 active:scale-95 text-slate-700 font-mono font-bold text-xs shadow-xs transition-all cursor-pointer min-h-[36px]"
+                  title={`SMS ${docRole.phone}`}
+                >
+                  <MessageSquare className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+                  <span>Text</span>
                 </a>
               </div>
             )}
@@ -246,19 +253,9 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
         {mentalHealthRoles.length > 0 && (
           <div className="space-y-3">
             <div className="flex items-center justify-between border-b border-blue-200 pb-2">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-blue-100 text-blue-800 rounded-lg font-bold text-xs border border-blue-200">
-                  🧠
-                </span>
-                <div>
-                  <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                    Mental Health Senior Managers on Call
-                  </h3>
-                  <p className="text-[11px] text-slate-500">
-                    Ldn-SNoC (Senior Nurse), MK-MoC (Milton Keynes) & MH-SMoC (Senior Manager)
-                  </p>
-                </div>
-              </div>
+              <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
+                Mental Health Senior Managers on Call
+              </h3>
             </div>
 
             <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-stretch">
@@ -271,19 +268,9 @@ export const CurrentOnCallTab: React.FC<CurrentOnCallTabProps> = ({
         {communityRoles.length > 0 && (
           <div className="space-y-3">
             <div className="flex items-center justify-between border-b border-sky-200 pb-2">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-sky-100 text-sky-800 rounded-lg font-bold text-xs border border-sky-200">
-                  🏡
-                </span>
-                <div>
-                  <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
-                    Community Senior Manager on Call
-                  </h3>
-                  <p className="text-[11px] text-slate-500">
-                    Com-SMoC (Senior Operational Manager for Community Services & Urgent Care)
-                  </p>
-                </div>
-              </div>
+              <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">
+                Community Senior Manager on Call
+              </h3>
             </div>
 
             <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 items-stretch">
